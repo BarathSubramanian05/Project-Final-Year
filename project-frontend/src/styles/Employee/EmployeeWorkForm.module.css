@@ -1,0 +1,225 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  width: 100%;
+  background: #f9f9f9;
+  padding: 0;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: linear-gradient(135deg, #1a202c 0%, #000000 100%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  line-height: 1.3;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+
+.container {
+  max-width: 950px;
+  margin: 30px auto;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.topRow,
+.row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  background: #f8fafc;
+  color: #2d3748;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+input:read-only {
+  background: #eee;
+}
+
+textarea {
+  resize: none;
+  grid-column: span 2;
+  height: 80px;
+}
+
+.startBtn, .stopBtn, .submitBtn , .discardBtn{
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 14px 20px;
+  font-size: 15px;
+  width: 150px;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.startBtn {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+}
+
+.stopBtn {
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+  color: #ffffff;
+}
+
+.submitBtn {
+  background: linear-gradient(135deg, #16a34a 0%, #047857 100%);
+  color: #ffffff;
+}
+
+.discardBtn{
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+  color: #ffffff;
+}
+
+.startBtn:hover, .stopBtn:hover, .submitBtn:hover, .discardBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.3);
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: #f8fafc url("data:image/svg+xml;utf8,<svg fill='gray' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 10px center;
+  background-size: 16px;
+  cursor: pointer;
+}
+
+.buttonDisabled {
+  background: #ccc !important;     /* Light gray background */
+  color: #666 !important;          /* Dark gray text */
+  cursor: not-allowed !important;  /* Show disabled cursor */
+  box-shadow: none !important;     /* Remove shadow */
+  transform: none !important;      /* Prevent transform */
+}
+
+
+.startBtn:not(.buttonDisabled):hover,
+.stopBtn:not(.buttonDisabled):hover,
+.submitBtn:not(.buttonDisabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.3);
+}
+
+
+.field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 11px;
+}
+
+/* Label blends smoothly with input box */
+.field label {
+  position: absolute;
+  top: -21px;
+  left: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #666; /* softer text color */
+  padding: 0 4px;
+  border-radius: 4px;
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+/* Optional — when input is focused, highlight label slightly */
+.field input:focus + label,
+.field select:focus + label,
+.field textarea:focus + label {
+  color: #333;
+}
+
+
+
+
+@media (max-width: 768px) {
+  .container {
+    padding: 30px 20px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  input, select, textarea {
+    font-size: 14px;
+  }
+
+  .startBtn, .stopBtn, .submitBtn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 20px 15px;
+  }
+
+  .header h1 {
+    font-size: 18px;
+  }
+}
+
+.workDetailsHeader {
+  margin-top: 20px; /* pushes header below navbar */
+  text-align: center;
+  background-color: white;
+  padding: 2px;
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 10px;
+}
+
+

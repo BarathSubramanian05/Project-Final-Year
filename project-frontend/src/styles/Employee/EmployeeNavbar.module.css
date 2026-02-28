@@ -1,0 +1,246 @@
+/* Header */
+.header {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #1a202c 0%, #000000 100%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  /* position: sticky;
+  top: 0px;
+  width: 1381px;
+  z-index: 999;
+  overflow-y: hidden; */
+}
+/* ===== Sandwich Icon ===== */
+.sandwichMenu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.badge {
+  background-color: #ef4444; /* red */
+  color: white;
+  border-radius: 9999px;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 6px;
+}
+
+
+.menuIcon {
+  width: 28px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.menuIcon span {
+  display: block;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* ===== Sidebar Menu (expanding container) ===== */
+.sidebarMenu {
+  position: fixed;
+  top: 0;
+  left: -260px; /* hidden initially */
+  height: 100%;
+  width: 250px;
+  background: linear-gradient(135deg, #1a202c 0%, #000000 100%);
+  color: white;
+  transition: left 0.3s ease;
+  padding-top: 60px;
+  z-index: 99999;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.4);
+}
+
+.sidebarMenu.open {
+  left: 0; /* slides in from left */
+}
+
+.sidebarMenu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebarMenu li {
+  padding: 15px 25px;
+  margin-top: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.sidebarMenu li:hover {
+  background-color: #333;
+}
+
+/* ===== Links inside sidebar ===== */
+.menuLink {
+  color: white;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+}
+
+.menuLink:hover {
+  color: #00b4ff;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  flex-wrap: wrap;
+}
+
+/* Left side: Back button */
+.navLeft {
+  display: flex;
+  align-items: center;
+}
+
+/* Center: Heading */
+.logo {
+  width: 45px;
+  height: auto;
+  margin-right: 5px;
+}
+
+.navCenter {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.navCenter h1 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+}
+
+
+/* Right side: Nav links and buttons */
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Links */
+.navLink {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+.navLink:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #f0f0f0;
+}
+
+/* User Name */
+.userName {
+  font-weight: 500;
+  padding: 6px 12px;
+}
+
+/* Buttons */
+.backBtn,
+.logoutBtn {
+  padding: 10px 19px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.2s ease-in-out;
+}
+
+
+.backBtn {
+  background-color: #3498db;
+  color: white;
+}
+
+.backBtn:hover {
+  background-color: #2980b9;
+}
+
+.logoutBtn {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.logoutBtn:hover {
+  background-color: #c0392b;
+}
+
+/* Responsive Navbar */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: row;        /* keep items in a row */
+    flex-wrap: wrap;            /* allow wrapping if needed */
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+  }
+
+  .navLeft,
+  .navRight,
+  .navCenter {
+    width: auto;
+    text-align: center;
+    flex: 1 1 auto;            /* flexible width */
+  }
+
+  .navRight {
+    justify-content: flex-end;  /* right align buttons/links */
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .navLink,
+  .backBtn,
+  .logoutBtn,
+  .userName {
+    padding: 5px 8px;
+    font-size: 14px;
+  }
+
+  .navCenter h1 {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navCenter h1 {
+    font-size: 14px;
+  }
+
+  .navLink,
+  .backBtn,
+  .logoutBtn,
+  .userName {
+    padding: 4px 6px;
+    font-size: 12px;
+  }
+}

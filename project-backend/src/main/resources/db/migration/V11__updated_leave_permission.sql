@@ -1,0 +1,8 @@
+ALTER TABLE leave_permission
+ADD COLUMN leave_half VARCHAR(20);
+
+ALTER TABLE leave_balance
+MODIFY casual_leaves DOUBLE NOT NULL DEFAULT 12.0,
+MODIFY sick_leaves DOUBLE NOT NULL DEFAULT 8.0,
+MODIFY marriage_leaves DOUBLE NOT NULL DEFAULT 14.0,
+MODIFY maternity_leaves DOUBLE NOT NULL DEFAULT 14.0;

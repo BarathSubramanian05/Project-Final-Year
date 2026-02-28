@@ -1,0 +1,559 @@
+/* ====== Container ====== */
+.tableContainer {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  padding: 25px 35px;
+  margin-top: 25px;
+  transition: box-shadow 0.3s ease;
+}
+
+.tableContainer:hover {
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
+}
+
+/* ====== Header ====== */
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a2d54;
+  margin-bottom: 20px;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+/* ====== Updated Table Styling - Matching projectsTable ====== */
+.detailsTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  table-layout: fixed;
+  display: block;
+  max-height: 500px; /* enables scroll when needed */
+  overflow-y: auto;
+}
+
+.detailsTable thead {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.detailsTable tbody {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.detailsTable th,
+.detailsTable td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  overflow: visible;
+  text-align: center;
+  vertical-align: middle;
+  white-space: normal;
+  text-overflow: unset;
+}
+
+
+
+/* Modern gradient header for detailsTable */
+.detailsTable thead th {
+  background: linear-gradient(135deg, #1e293b, #334155);
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 12px 15px;
+  text-align: center;
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* Fixed column widths */
+.detailsTable th:nth-child(1),
+.detailsTable td:nth-child(1) { width: 80px; }   /* Project ID */
+.detailsTable th:nth-child(2),
+.detailsTable td:nth-child(2) { width: 200px; }  /* Project Name */
+.detailsTable th:nth-child(3),
+.detailsTable td:nth-child(3) { width: 200px; }  /* Client */
+.detailsTable th:nth-child(4),
+.detailsTable td:nth-child(4) { width: 120px; }  /* Manager */
+.detailsTable th:nth-child(5),
+.detailsTable td:nth-child(5) { width: 120px; }  /* Assigned Hours */
+.detailsTable th:nth-child(6),
+.detailsTable td:nth-child(6) { width: 120px; }  /* Status */
+.detailsTable th:nth-child(7),
+.detailsTable td:nth-child(7) { width: 117px; }  /* Action */
+
+.detailsTable tbody tr {
+  transition: all 0.2s ease;
+  height: 50px;
+}
+
+.detailsTable tbody tr:nth-child(even) {
+  background-color: #f9fafc;
+}
+
+.detailsTable tbody tr:hover {
+  background-color: #eef2fa;
+  transition: background 0.2s ease;
+}
+
+
+
+/* ====== Action Button ====== */
+.actionBtn {
+  background: linear-gradient(135deg, #1a2d54, #253b72);
+  border: none;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 8px;
+}
+
+
+.actionBtn:hover {
+  background: linear-gradient(135deg, #253b72, #3a4c89);
+  transform: scale(1.03);
+}
+
+.formContainer {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  padding: 30px 40px;
+  margin-top: 25px;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.formTitle {
+  text-align: center;
+  color: #1a2d54;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  padding-bottom: 8px;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+}
+
+.formField label {
+  font-weight: 600;
+  color: #1a2d54;
+  margin-bottom: 6px;
+}
+
+.formField input,
+.formField select {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+.formActions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 25px;
+}
+
+.cancelBtn {
+  background: #dc2626;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancelBtn:hover {
+  background: #b91c1c;
+}
+
+.backbtn{
+    background: blue;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.statusBtn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #fff;
+  margin-left:10px;
+}
+
+.pending {
+  background-color: #f59e0b; /* yellow/orange */
+}
+
+.completed {
+  background-color: #16a34a; /* green */
+}
+
+.statusBtn:hover {
+  transform: scale(1.05);
+}
+
+/* ====== Filter Box Styles - Matching projectsTable ====== */
+.filterBar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 15px 20px;
+  border-radius: 8px;
+}
+
+.searchBox {
+  flex: 1;
+  min-width: 250px;
+}
+
+.searchInput {
+  width: 27%;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #475569;
+  background-color: #f8fafc;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e293b;
+  transition: all 0.2s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.searchInput::placeholder {
+  color: #64748b;
+  font-weight: normal;
+}
+
+.filterSelect {
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #475569;
+  background-color: #f8fafc;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e293b;
+  transition: all 0.2s ease;
+  max-width: 180px;
+}
+
+.filterSelect:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+
+.addBtn {
+  background: linear-gradient(135deg, #027604, #08ad19);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.clearBtn {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.clearBtn:hover {
+  background: linear-gradient(135deg, #b91c1c, #991b1b);
+  transform: scale(1.03);
+}
+
+.addBtn:hover {
+  background: linear-gradient(135deg, #1c8b08, #329206);
+  transform: scale(1.03);
+}
+
+.noData {
+  text-align: center;
+  padding: 40px 30px;
+  color: #64748b;
+  font-size: 16px;
+  font-style: italic;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.statusInProgress {
+  color: orange;
+  font-weight: 600;
+}
+
+.statusCompleted {
+  color: green;
+  font-weight: 600;
+}
+
+/* ====== Responsive Design for Filters ====== */
+@media (max-width: 768px) {
+  .filterBar {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+  }
+  
+  .searchBox {
+    min-width: 100%;
+    width: 100%;
+  }
+  
+  .filterSelect {
+    min-width: 100%;
+    width: 100%;
+  }
+  
+  .clearBtn {
+    width: 100%;
+    margin-top: 5px;
+  }
+}
+
+/* ====== Responsive Design ====== */
+@media (max-width: 768px) {
+  .detailsTable th,
+  .detailsTable td {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .tableContainer {
+    padding: 15px 20px;
+  }
+  
+  /* Adjust table for mobile */
+  .detailsTable {
+    display: table;
+    max-height: none;
+    overflow-x: auto;
+  }
+}
+
+
+
+
+
+
+
+/* --- Date Range Section --- */
+.dateRange {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.dateRange label {
+  color: #1a2d54;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.ellipsis {
+  padding: 8px 6px;
+  color: #777;
+  font-size: 15px;
+}
+
+
+.dateRange input[type="date"] {
+  padding: 11px 12px;
+  border: 1px solid #c7d2e8;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+  background-color: #ffffff;
+  color: #1a2d54;
+  transition: all 0.2s ease;
+}
+
+.dateRange input[type="date"]:focus {
+  border-color: #3a6cf4;
+  box-shadow: 0 0 0 2px rgba(58, 108, 244, 0.2);
+}
+
+
+.paginationContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.pageBtn {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.pageBtn:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.pageBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.activePage {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+.pageInfo {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+
+/* Modal Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30, 30, 30, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+/* Modal Box */
+.modal {
+  width: 60%;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal h3 {
+  margin-bottom: 12px;
+  color: #1e293b;
+}
+
+.memberTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.memberTable th {
+  background: #1e293b;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+}
+
+.memberTable td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+/* ✅ Make table rows clickable */
+.detailsTable tbody tr {
+  cursor: pointer;   /* <-- pointer hover */
+}
+.detailsTable tbody tr:hover {
+  background-color: #eaeaea; /* soft hover */
+}
+
+/* ✅ Close button moved to top-right inside modal */
+.closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #e53935; /* Red */
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+/* Hover effect */
+.closeBtn:hover {
+  background: #b71c1c;
+}
+
+/* ✅ Ensure modal supports absolute button placement */
+.modal {
+  position: relative; /* important */
+}

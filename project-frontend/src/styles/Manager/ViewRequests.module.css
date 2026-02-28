@@ -1,0 +1,324 @@
+.container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  overflow-x: auto;
+}
+
+.exportBtn {
+  background-color: #1f74d4;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+.exportBtn:hover {
+  background-color: #155a9c;
+}
+
+
+
+.filterButtons {
+  display: flex;
+  margin-bottom: 15px;
+  justify-content: center;
+}
+
+
+.filterBtn:first-child {
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  margin-left: 0; /* first button no negative margin */
+}
+
+.filterBtn:last-child {
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+.filterBtn:hover {
+  background-color: #93beed;
+  color: white;
+}
+
+/* ✅ Approve/Reject buttons redesigned */
+.approveBtn,
+.rejectBtn {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+.filterBarWrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* Overlay box positioned BELOW the filter bar */
+.dateRangeBox {
+  position: absolute;
+  top: 37%;
+  left: 20%; /* just below the bar */
+  z-index: 1000;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px;
+  width: fit-content;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+/* Inner layout */
+.dateInputs {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.dateInputs input[type="date"] {
+  flex: 1;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* ✅ Compact Clear Filters Button */
+.clearBtn {
+  background-color: #007bff;
+  color: #fff;
+  display: inline;
+  border: none;
+  border-radius: 6px;
+  padding:12px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.3s;
+  margin-left: 10px;
+  height: fit-content;
+}
+
+.clearBtn:hover {
+  background-color: #0056b3;
+}
+
+
+
+.filterBar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.filterSelect{
+  display: inline;
+  max-width: 180px;
+  margin: 20px;
+}
+
+/* Approve */
+.approveBtn {
+  color: white;
+  background-color: #22c55e; /* green */
+}
+
+.approveBtn:hover {
+  background-color: #16a34a;
+  color: white;
+}
+
+/* Reject */
+.rejectBtn {
+  color: white;
+  background-color: #ef4444; /* red */
+}
+
+.rejectBtn:hover {
+  background-color: #dc2626;
+  color: white;
+}
+
+
+.statusApproved {
+  color: #22c55e; /* Tailwind green-500 */
+  font-weight: 600;
+}
+
+.statusPending {
+  color: orange; /* Tailwind red-500 */
+  font-weight: 600;
+}
+
+.statusRejected {
+  color: #ef4444; /* Tailwind red-500 */
+  font-weight: 600;
+}
+
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.active {
+  border-color: #007bff;
+  background-color: #007bff;
+  color: #fff;
+  transition: 0.5s;
+}
+
+.filterBtn {
+  box-sizing: border-box; /* include border in width */
+  border: 1px solid gray; /* same width for all buttons */
+  padding: 6px 14px; /* adjust to maintain size with 2px border */
+  transition: all 0.2s ease;
+  font-size: 16px;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  width: 100%;
+  max-height: 500px;
+}
+
+
+.requestTable {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  display: block;
+  max-height: 500px;        /* controls scroll height */
+  overflow-y: auto;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+
+.requestTable th,
+.requestTable td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.requestTable thead th {
+  background: linear-gradient(135deg, #1e293b, #334155);
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Optional row hover */
+.requestTable tbody tr:hover {
+  background-color: #f1f5f9;
+}
+
+.requestTable thead {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.requestTable tbody {
+  transition: all 0.3s ease-in-out;
+   display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+
+
+
+.noData {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+  font-size: 15px;
+  font-style: italic;
+  background-color: #fafafa;
+}
+
+.approveBtn,
+.rejectBtn {
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.approveBtn {
+  color: green;
+  margin-right: 8px;
+}
+
+.rejectBtn {
+  color: red;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .requestTable {
+    font-size: 12px;
+  }
+
+  .requestTable th,
+  .requestTable td {
+    padding: 8px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+}
+
+.searchWrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  gap: 8px;
+}
+
+.searchInput {
+  padding: 8px 12px;
+  width: 260px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.clearButton {
+  background: #554e4e;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.clearBtn:hover {
+  background: #ddd;
+}
+

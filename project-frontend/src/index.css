@@ -1,0 +1,20 @@
+/* Custom pivot table styles */
+.pvtTable {
+  width: 95%;
+  table-layout: auto;
+  overflow: hidden;
+}
+
+table.pvtTable tbody tr th {
+    background-color: #ebf0f8;
+    border: 1px solid #c8d4e3;
+    font-size: 15pt;
+    padding: 5px;
+}
+
+.pvtTable th, .pvtTable td {
+  font-size:medium;
+  white-space: nowrap;
+  padding: 8px;
+  text-align: center;
+}

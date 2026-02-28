@@ -1,0 +1,901 @@
+.dashboardContainer {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.dashboardTitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.filterButtons {
+  display: flex;
+  margin-bottom: 15px;
+  justify-content: center;
+}
+
+/* ✅ Specific smaller height for Worklog modal */
+.worklogModal {
+  width: 70%;
+  max-height: 90vh; /* smaller than the default modal */
+  padding: 20px 25px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+
+.filterBtn:first-child {
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+}
+
+.filterBtn:last-child {
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+.filterBtn {
+  box-sizing: border-box;
+  border: 1px solid gray;
+  padding: 6px 14px;
+  transition: all 0.2s ease;
+  font-size: 16px;
+}
+
+.filterBtn:hover {
+  background-color: #93beed;
+  color: white;
+}
+
+.active {
+  border-color: #007bff;
+  background-color: #007bff;
+  color: #fff;
+}
+
+.menuLink {
+  color: white;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+}
+
+.menuLink li {
+  padding: 15px 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.menuLink:hover li {
+  background-color: #333;
+}
+
+.activeLink li {
+  background-color: #222;
+  color: #00b4ff;
+  font-weight: 600;
+}
+
+.statusInProgress {
+  color: orange;
+  font-weight: 600;
+}
+
+.statusCompleted {
+  color: green;
+  font-weight: 600;
+}
+
+/* --- FIXED HEADER + PROPER ALIGNMENT --- */
+
+.projectsTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  table-layout: fixed;
+  display: block;
+  max-height: 500px; /* enables scroll when needed */
+  overflow-y: auto;
+}
+
+.projectsTable thead {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+
+
+
+
+.projectsTable tbody {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+
+}
+
+.projectsTable th,
+.projectsTable td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  overflow: hidden; 
+  text-align: center; /* <-- add this */
+  vertical-align: middle;
+}
+
+.projectsTable tbody tr {
+  transition: all 0.2s ease;
+  height: 50px; 
+}
+
+.tabContent {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.fadeIn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fadeOut {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+
+
+
+.highlightRow {
+  background-color: #eddd97; /* light red tone */
+}
+
+/* Modern gradient header for projectsTable */
+.projectsTable thead th {
+  background: linear-gradient(135deg, #1e293b, #334155); /* gradient dark blue/gray */
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 12px 15px;
+  text-align: center; /* optional: center headers */
+}
+
+
+.projectsTable th,
+.projectsTable td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.projectsTable thead th {
+  background-color: rgb(54, 52, 52);
+  color: white;
+}
+
+/* fixed column widths */
+.projectsTable th:nth-child(1),
+.projectsTable td:nth-child(1) { width: 80px; }   /* Project ID */
+.projectsTable th:nth-child(2),
+.projectsTable td:nth-child(2) { width: 200px; }  /* Project Name */
+.projectsTable th:nth-child(3),
+.projectsTable td:nth-child(3) { width: 200px; }  /* Client Name */
+.projectsTable th:nth-child(4),
+.projectsTable td:nth-child(4) { width: 120px; }  /* Assigned Hours */
+.projectsTable th:nth-child(5),
+.projectsTable td:nth-child(5) { width: 120px; }  /* Working Hours */
+.projectsTable th:nth-child(6),
+.projectsTable td:nth-child(6) { width: 120px; }  /* Project Status */
+
+.projectsTable tbody tr {
+  transition: all 0.1s ease;
+  height: 50px;
+}
+
+.projectsTable th {
+  white-space: normal;
+  word-break: break-word;
+  overflow: visible;
+  height: auto;
+  text-align: center;
+  vertical-align: middle;
+  padding: 12px 15px;
+  transition: all 0.2s ease;
+}
+
+
+.noData {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+  font-size: 15px;
+  font-style: italic;
+  background-color: #fafafa;
+}
+
+/* Workdetails edit */
+/* Transition animation */
+.fadeIn {
+  opacity: 1;
+  transition: opacity 0.3s ease-in;
+}
+
+.fadeOut {
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+/* Filters + Table */
+.filterSection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.filterInput {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.dataTable th {
+  background-color: #007bff;
+  color: white;
+  text-align: left;
+  padding: 10px;
+  font-weight: 600;
+}
+
+.dataTable td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.dataTable tr:hover {
+  background-color: #f9f9f9;
+}
+
+.viewBtn {
+  padding: 6px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.viewBtn:hover {
+  background-color: #0056b3;
+}
+
+.noData {
+  text-align: center;
+  padding: 15px;
+  color: #777;
+}
+
+@media (max-width: 900px) {
+  .projectsTable th {
+    font-size: 13px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .projectsTable th {
+    font-size: 11px;
+  }
+}
+
+/* 🟥 On smaller screens: prevent wrapping & keep height fixed */
+@media (max-width: 1200px) {
+  .projectsTable th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 50px;
+    line-height: 50px;
+    padding: 8px 10px;
+  }
+}
+
+/* 🟦 On very small screens: make text smaller */
+@media (max-width: 600px) {
+  .projectsTable th {
+    font-size: 13px;
+  }
+}
+
+
+/* Modal Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30, 30, 30, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+/* Modal Box */
+.modal {
+  width: 60%;
+  background: #ffffff;
+  max-height: 530px;
+  overflow-y: auto;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal h3 {
+  margin-bottom: 12px;
+  color: #1e293b;
+}
+
+.memberTableWrapper {
+  max-height: 550px;   /* adjust as needed */
+
+  border-radius: 8px;
+}
+
+
+.memberTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  table-layout: fixed;
+}
+
+.memberTable th {
+  background: #1e293b;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+}
+
+.memberTable td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+.memberTable thead th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #1e293b;   /* same as header color */
+  color: white;
+}
+
+/* ✅ Make table rows clickable */
+.projectsTable tbody tr {
+  cursor: pointer;   /* <-- pointer hover */
+}
+.projectsTable tbody tr:hover {
+  background-color: #eaeaea; /* soft hover */
+}
+
+/* ✅ Close button moved to top-right inside modal */
+.closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #e53935; /* Red */
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+/* Hover effect */
+.closeBtn:hover {
+  background: #b71c1c;
+}
+
+/* ✅ Ensure modal supports absolute button placement */
+.modal {
+  position: relative; /* important */
+}
+
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.topFilterRow {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.searchInput, .managerDropdown {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+.searchInput:focus, .managerDropdown:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.rowHover {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.rowHover:hover {
+  background-color: #f2f6ff;
+}
+
+
+.clearBtn {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.clearBtn:hover {
+  background: linear-gradient(135deg, #b91c1c, #991b1b);
+  transform: scale(1.03);
+}
+.filterBar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 15px 20px;
+  border-radius: 8px;
+}
+
+.searchBox {
+  flex: 1;
+  min-width: 250px;
+}
+
+.searchInput {
+  width: 18%;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #475569;
+  background-color: #f8fafc;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e293b;
+  transition: all 0.2s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.searchInput::placeholder {
+  color: #64748b;
+  font-weight: normal;
+}
+
+.filterSelect {
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #475569;
+  background-color: #f8fafc;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e293b;
+  transition: all 0.2s ease;
+  min-width: 150px;
+}
+
+.filterSelect:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.coordinatorInfo {
+  margin: 10px 0 15px 0;
+  padding: 8px 12px;
+  background-color: #f8fafc;
+  border-left: 4px solid #2563eb;
+  border-radius: 6px;
+  font-size: 20px;
+  font-weight: 500;
+  color: #1e293b;
+}
+
+
+.redAlertRow {
+  background-color: rgba(255, 87, 51, 0.25); /* Soft red warning */
+  animation: pulseAlert 1.5s infinite;
+}
+
+@keyframes pulseAlert {
+  0% { box-shadow: 0 0 0px rgba(255, 87, 51, 0.6); }
+  50% { box-shadow: 0 0 10px rgba(255, 87, 51, 0.8); }
+  100% { box-shadow: 0 0 0px rgba(255, 87, 51, 0.6); }
+}
+
+/* Overlay for assigned resources */
+/* 🟦 Overlay Background (above everything) */
+.resourcesOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(30, 41, 59, 0.75); /* soft dark transparent */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* ensure it's above other modals */
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* 🟦 Overlay Content Box */
+.resourcesOverlayContent {
+  background: #ffffff;
+  width: 50%;
+  max-height: 80vh;
+  overflow-y: auto;
+  border-radius: 14px;
+  padding: 25px 30px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  position: relative;
+  animation: slideUp 0.35s ease-out;
+}
+
+/* 🟦 Overlay Header (Title + Close Button) */
+.resourcesOverlayHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.resourcesOverlayHeader h3 {
+  margin: 0;
+  color: #1e293b;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* 🟥 Close Button */
+.closeOverlayBtn {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border: none;
+  color: #fff;
+  font-size: 0.9rem;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+}
+.closeOverlayBtn:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  transform: scale(1.05);
+}
+
+/* 🟩 Resources Table */
+.resourcesTable {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  background-color: #f8fafc;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.resourcesTableWrapper {
+  max-height: 550px; 
+  overflow-y: auto;   /* adjust as needed */
+  border-radius: 12px;
+}
+
+
+/* Table Header */
+.resourcesTable th {
+  background: linear-gradient(135deg, #1e293b, #334155);
+  color: #ffffff;
+  padding: 12px 16px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.resourcesTable thead th {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: linear-gradient(135deg, #1e293b, #334155);
+  color: #fff;
+}
+
+
+/* Table Body */
+.resourcesTable td {
+  padding: 12px 16px;
+  text-align: center;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 14px;
+  color: #1e293b;
+  background-color: #ffffff;
+}
+
+.resourcesTable tr:hover td {
+  background-color: #f1f5f9;
+  transition: background-color 0.2s ease;
+}
+
+/* 🕶️ When no data available */
+.noResources {
+  text-align: center;
+  padding: 20px;
+  font-size: 15px;
+  color: #64748b;
+  background-color: #f8fafc;
+  border-radius: 10px;
+}
+
+/* ✨ Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Project Summary styles */
+
+
+/* 🔹 Horizontal Project Summary Table Theme */
+.projectSummaryTableContainer {
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.projectSummaryTitle {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  color: #003366;
+  font-weight: 600;
+  text-align: center;
+}
+
+.projectSummaryHorizontalTable {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.projectSummaryHorizontalTable th {
+  background-color: #e3f0ff;
+  color: #003366;
+  padding: 10px;
+  font-weight: 600;
+  border-bottom: 1px solid #d0e3f5;
+}
+
+.projectSummaryHorizontalTable td {
+  padding: 10px;
+  color: #333;
+  border-bottom: 1px solid #e6eef8;
+}
+
+.projectSummaryHorizontalTable tr:last-child td {
+  border-bottom: none;
+}
+
+.projectSummaryActions {
+  text-align: right;
+  margin-top: 15px;
+}
+
+.viewResourcesBtn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #0052cc;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.viewResourcesBtn:hover {
+  background-color: #003d99;
+}
+
+.projectDetailsTitle {
+  text-align: center;
+  color: #2b2b2b;
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.projectDetailsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.projectDetailsTable th,
+.projectDetailsTable td {
+  border: 1px solid #ccc;
+  padding: 10px 12px;
+  text-align: left;
+}
+
+.projectDetailsTable th {
+  background: #f3f6f9;
+  color: #333;
+  width: 25%;
+}
+
+.projectActionButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.actionBtn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.actionBtn:hover {
+  background-color: #0056b3;
+}
+
+.managerInfo {
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.managerInfo span {
+  color: #007bff;
+}
+
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.paginationBtn,
+.pageNumber {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 14px;
+}
+
+.paginationBtn:disabled {
+  background-color: #b0b0b0;
+  cursor: not-allowed;
+}
+
+.pageNumber {
+  background-color: #eaeaea;
+  color: #333;
+}
+
+.pageNumber:hover {
+  background-color: #d4d4d4;
+}
+
+.activePage {
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
+}
+
+.ellipsis {
+  padding: 0 5px;
+  color: #666;
+}
+
+.worklogFilters {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.worklogFilters input,
+.worklogFilters select {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.clearBtn {
+  background: #d9534f;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.clearBtn:hover {
+  background: #c9302c;
+}
+

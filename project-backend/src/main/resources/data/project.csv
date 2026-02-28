@@ -1,0 +1,27 @@
+id,project_name,client_name,manager_id,assigned_hours,working_hours,assigned_date,project_status,soft_delete,modelling_hours,checking_hours,detailing_hours,modelling_time,checking_time,detailing_time
+1,Alpha Tower,ABC Constructions,1003,500,120.5,10-01-2025,FALSE,FALSE,200,175,125,48.2,42.2,30.1
+2,Beta Plaza,XYZ Builders,1003,300,75,15-02-2025,FALSE,FALSE,120,105,75,30,26.3,18.8
+3,Gamma Heights,Acme Corp,1016,400,90,20-01-2025,TRUE,FALSE,160,140,100,36,31.5,22.5
+4,Delta Residency,Prime Estates,1016,350,60.5,05-03-2025,TRUE,FALSE,140,122.5,87.5,24.2,21.2,15.1
+5,Epsilon Mall,Urban Developers,1029,600,150,01-02-2025,TRUE,FALSE,240,210,150,60,52.5,37.5
+6,Zeta Complex,Global Constructions,1029,450,110,18-02-2025,TRUE,FALSE,180,157.5,112.5,44,38.5,27.5
+7,Eta Gardens,Sunrise Builders,1042,500,130,01-03-2025,TRUE,FALSE,200,175,125,52,45.5,32.5
+8,Theta Residency,Metro Homes,1042,400,95,10-03-2025,TRUE,FALSE,160,140,100,38,33.3,23.8
+9,Iota Towers,Greenfield Constructions,1055,100,125,25-01-2025,TRUE,FALSE,40,35,25,50,43.8,31.3
+10,Kappa Plaza,BlueSky Builders,1055,30,80,12-02-2025,TRUE,FALSE,12,10.5,7.5,32,28,20
+11,Lambda Heights,Omega Corp,1068,160,140,15-01-2025,TRUE,FALSE,64,56,40,56,49,35
+12,Mu Residency,Peak Estates,1068,450,100,05-02-2025,TRUE,FALSE,180,157.5,112.5,40,35,25
+13,Nu Mall,Sunrise Developers,1081,500,120,01-03-2025,TRUE,FALSE,200,175,125,48,42,30
+14,Xi Complex,Prime Builders,1081,350,85,08-03-2025,TRUE,FALSE,140,122.5,87.5,34,29.8,21.3
+15,Omicron Gardens,Global Estates,1094,400,90,28-01-2025,TRUE,FALSE,160,140,100,36,31.5,22.5
+16,Pi Residency,Urban Constructions,1094,300,75,18-02-2025,TRUE,FALSE,120,105,75,30,26.3,18.8
+17,Rho Tower,Sunrise Constructions,1003,420,110,12-03-2025,TRUE,FALSE,168,147,105,44,38.5,27.5
+18,Sigma Plaza,Blue Horizon Builders,1003,360,90,18-03-2025,TRUE,FALSE,144,126,90,36,31.5,22.5
+19,Tau Heights,Greenfield Estates,1016,480,105,22-02-2025,TRUE,FALSE,192,168,120,42,36.8,26.3
+20,Upsilon Residency,Metro Developers,1016,390,95,28-02-2025,TRUE,FALSE,156,136.5,97.5,38,33.3,23.8
+21,Phi Mall,Omega Builders,1029,520,130,05-03-2025,TRUE,FALSE,208,182,130,52,45.5,32.5
+22,Chi Complex,Urban Estates,1029,430,115,10-03-2025,TRUE,FALSE,172,150.5,107.5,46,40.3,28.8
+23,Psi Gardens,Acme Developers,1042,460,120,25-02-2025,TRUE,FALSE,184,161,115,48,42,30
+24,Omega Residency,Prime Constructions,1042,380,100,02-03-2025,TRUE,FALSE,152,133,95,40,35,25
+25,Alpha Plaza,Sunrise Estates,1055,500,125,07-03-2025,TRUE,FALSE,200,175,125,50,43.8,31.3
+26,Beta Heights,BlueSky Developers,1068,420,110,12-03-2025,TRUE,FALSE,168,147,105,44,38.5,27.5

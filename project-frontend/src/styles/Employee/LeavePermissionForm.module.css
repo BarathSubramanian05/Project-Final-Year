@@ -1,0 +1,930 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.tabButtons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.statusCompleted {
+  color: green;
+  font-weight: 600;
+}
+
+.tabBtn {
+  background: #e5e7eb;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #374151;
+  transition: all 0.3s ease;
+}
+
+.tabBtn:hover {
+  background: #d1d5db;
+}
+
+
+.requestTable {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  margin-top: 10px;
+}
+
+
+.filterButtons {
+  display: flex;
+  margin-bottom: 45px;
+  justify-content: center;
+}
+
+.active {
+  border-color: #007bff;
+  background-color: #007bff;
+  color: #fff;
+}
+
+.filterBtn {
+  box-sizing: border-box; /* include border in width */
+  border: 1px solid gray; /* same width for all buttons */
+  padding: 6px 14px; /* adjust to maintain size with 2px border */
+  transition: all 0.2s ease;
+  font-size: 16px;
+}
+.filterBtn:first-child {
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  margin-left: 0; /* first button no negative margin */
+}
+
+.filterBtn:last-child {
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+.filterBtn:hover {
+  background-color: #93beed;
+  color: white;
+}
+.statusApproved {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.statusPending {
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+.statusRejected {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+
+/* ===================== IMPROVED TABLE STYLES ===================== */
+.requestTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+}
+
+.requestTable th,
+.requestTable td {
+  padding: 12px 16px;
+  text-align: center;
+  font-size: 15px;
+  border-bottom: 1px solid #e5e7eb;
+  transition: background 0.2s ease;
+}
+
+.requestTable th {
+  background: linear-gradient(135deg, #1a2d54, #102255);
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.requestTable tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+.requestTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.requestTable td {
+  color: #374151;
+}
+
+/* Status text colors */
+
+
+/* Responsive for mobile */
+@media (max-width: 768px) {
+  .requestTable th,
+  .requestTable td {
+    padding: 10px;
+    font-size: 13px;
+  }
+}
+
+.noData {
+  text-align: center;
+  padding: 20px;
+  color: #6b7280;
+}
+
+
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: linear-gradient(135deg, #1a202c 0%, #000000 100%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  line-height: 1.3;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+
+.container {
+  max-width: 550px;
+  margin: 30px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Wider container for view tab (tables) */
+.viewContainer {
+  max-width: 1200px;   /* expand width */
+  width: 95%;          /* responsive width */
+  margin: 20px auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;    /* allow horizontal scroll if table too wide */
+}
+
+/* Optional: make table take full container width */
+.viewContainer .requestTable {
+  width: 100%;
+  min-width: 900px; /* ensures table doesn’t shrink too much */
+}
+
+
+h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #1a202c;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 11px;
+}
+
+.fld {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 30px;
+}
+
+.fld label {
+  position: absolute;
+  top: -21px;
+  left: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #666; /* softer text color */
+  padding: 0 4px;
+  border-radius: 4px;
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+/* Label blends smoothly with input box */
+.field label {
+  position: absolute;
+  top: -21px;
+  left: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #666; /* softer text color */
+  padding: 0 4px;
+  border-radius: 4px;
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+input,
+select,
+textarea {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  font-size: 14px;
+  outline: none;
+  background-color: #f9f9fb;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:read-only {
+  background: #eee;
+}
+
+textarea {
+  resize: none;
+  border-radius: 20px;
+  height: 80px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+/* Button */
+.submitBtn {
+  background: green;
+  color: white;
+  font-weight: bold;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  width: 180px;
+  margin: 20px auto 0;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.ResourceBtn {
+  background: #3566a9;
+  color: white;
+  font-weight: bold;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  width: 490px;
+  margin: 20px auto 0;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.ResourceBtn:hover {
+  background: #0b1a8f;
+}
+
+.submitBtn:hover {
+  background: #0b8f3f;
+}
+
+/* Dropdown and Input Focus Effects */
+select:focus,
+input:focus,
+textarea:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Placeholder Styling */
+input::placeholder,
+textarea::placeholder,
+select::placeholder {
+  color: #a0aec0;
+  font-size: 14px;
+}
+
+.timePickerPopup {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 5px 0;
+}
+.timePickerPopup input[type="time"] {
+  padding: 5px;
+  font-size: 16px;
+}
+.timePickerPopup button {
+  padding: 5px 10px;
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.timePickerPopup button:hover {
+  background-color: #0b5ed7;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: 20px;
+  }
+
+  input,
+  select,
+  textarea {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .submitBtn {
+    width: 100%;
+    padding: 14px;
+  }
+}
+
+/* ✅ Dimmed background */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+
+/* ✅ Modern Modal */
+.modalBox {
+  min-width: 560px;
+  background: #ffffff;
+  padding: 30px 32px;
+  border-radius: 14px;
+  box-shadow: 0px 10px 35px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.25s ease-out;
+}
+
+/* ✅ Header */
+.modalBox h3 {
+  font-size: 20px;
+  margin-bottom: 18px;
+  font-weight: 600;
+  color: #222;
+}
+
+/* ✅ Role buttons row */
+.filterRow {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+/* ✅ Role Button Base */
+.roleBtn {
+  padding: 7px 16px;
+  border-radius: 6px;
+  border: 1px solid #bdbdbd;
+  background: #f5f5f5;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.roleBtn:hover {
+  background: #e8e8e8;
+}
+
+/* ✅ Active Role Button Style */
+.activeRole {
+  background: #0077ff;
+  color: #fff;
+  border: 1px solid #0077ff;
+}
+
+/* ✅ Scrollable resource options */
+.modalContent {
+  max-height: 240px;
+  overflow-y: auto;
+  padding-right: 6px;
+  margin-bottom: 18px;
+}
+
+/* ✅ Resource Checkbox Labels */
+.checkItem {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  padding: 6px 0;
+  color: #333;
+  gap: 10px;
+}
+
+/* ✅ Button row */
+.modalActions {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 6px;
+}
+
+/* ✅ Buttons */
+.doneBtn {
+  background: #0a8d2f;
+  border: none;
+  color: white;
+  padding: 10px 26px;
+  font-size: 15px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.doneBtn:hover {
+  background: #007a27;
+}
+
+.cancelBtn {
+  background: transparent;
+  border: 1.6px solid #d32f2f;
+  color: #d32f2f;
+  padding: 10px 26px;
+  font-size: 15px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cancelBtn:hover {
+  background: #ffe9e9;
+}
+
+/* ✅ Fade In Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Modal list item: checkbox, name/designation, optional role tag */
+.checkItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 6px;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+/* left checkbox sizing */
+.checkItem input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
+/* name + designation stacked */
+.empInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1; /* take remaining space so role tag sits to right */
+  min-width: 0; /* prevent overflow */
+}
+
+.empName {
+  font-weight: 600;
+  font-size: 15px;
+  color: #111827; /* dark */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.empDesignation {
+  font-size: 13px;
+  color: #6b7280; /* muted gray */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* optional right-side role tag */
+.empRoleTag {
+  font-size: 12px;
+  color: #0b6efd;
+  border: 1px solid #dbeafe;
+  background: #eff6ff;
+  padding: 6px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* ensure modalContent scroll is neat */
+.modalContent {
+  max-height: 260px; /* tweak as needed */
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+/* small responsive tweak so layout doesn't break on narrow screens */
+@media (max-width: 600px) {
+  .modalBox { width: 92%; padding: 18px; }
+  .empRoleTag { display: none; } /* hide right tag on small screens */
+}
+
+/* Allow page scroll */
+html, body {
+  overscroll-behavior: none;
+  height: auto;
+  min-height: 100%;
+  overflow-y: auto;
+  background-color: #f3f4f6; /* optional light background */
+}
+
+
+.topFilterRow {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.searchInput {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+.searchInput:focus, .managerDropdown:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.filterSelect {
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #475569;
+  background-color: #f8fafc;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e293b;
+  transition: all 0.2s ease;
+  min-width: 150px;
+}
+
+.filterSelect:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.clearBtn {
+  background: #d9534f;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.clearBtn:hover {
+  background: #c9302c;
+}
+
+.projectsTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  table-layout: fixed;
+  display: block;
+  max-height: 400px; /* enables scroll when needed */
+  overflow-y: auto;
+}
+
+.projectsTable thead {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.projectsTable tbody {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+
+}
+
+.projectsTable th,
+.projectsTable td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  overflow: hidden; 
+  text-align: center; /* <-- add this */
+  vertical-align: middle;
+}
+
+.projectsTable tbody tr {
+  transition: all 0.2s ease;
+  height: 50px; 
+}
+
+.projectsTable thead th {
+  background: linear-gradient(135deg, #1e293b, #334155); /* gradient dark blue/gray */
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 12px 15px;
+  text-align: center; /* optional: center headers */
+}
+
+
+.projectsTable th,
+.projectsTable td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.projectsTable thead th {
+  background-color: rgb(54, 52, 52);
+  color: white;
+}
+
+
+.projectsTable tbody tr {
+  transition: all 0.1s ease;
+  height: 50px;
+}
+
+.projectsTable th {
+  white-space: normal;
+  word-break: break-word;
+  overflow: visible;
+  height: auto;
+  text-align: center;
+  vertical-align: middle;
+  padding: 12px 15px;
+  transition: all 0.2s ease;
+}
+
+
+.noData {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+  font-size: 15px;
+  font-style: italic;
+  background-color: #fafafa;
+}
+
+@media (max-width: 900px) {
+  .projectsTable th {
+    font-size: 13px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .projectsTable th {
+    font-size: 11px;
+  }
+}
+
+
+@media (max-width: 1200px) {
+  .projectsTable th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 50px;
+    line-height: 50px;
+    padding: 8px 10px;
+  }
+}
+
+/* 🟦 On very small screens: make text smaller */
+@media (max-width: 600px) {
+  .projectsTable th {
+    font-size: 13px;
+  }
+}
+
+.statusInProgress {
+  color: orange;
+  font-weight: 600;
+}
+
+.statusCompleted {
+  color: green;
+  font-weight: 600;
+}
+
+.actionBtn {
+  background: linear-gradient(135deg, #1a2d54, #253b72);
+  border: none;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 8px;
+}
+
+
+.actionBtn:hover {
+  background: linear-gradient(135deg, #253b72, #3a4c89);
+  transform: scale(1.03);
+}
+
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.paginationBtn,
+.pageNumber {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 14px;
+}
+
+.paginationBtn:disabled {
+  background-color: #b0b0b0;
+  cursor: not-allowed;
+}
+
+.pageNumber {
+  background-color: #eaeaea;
+  color: #333;
+}
+
+.pageNumber:hover {
+  background-color: #d4d4d4;
+}
+
+.activePage {
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
+}
+
+.ellipsis {
+  padding: 0 5px;
+  color: #666;
+}
+
+.resourceTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.resourceTable th,
+.resourceTable td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.actionsCol {
+  text-align: right;
+}
+
+.menuWrapper {
+  position: relative;
+}
+
+.menuBtn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.menuDropdown {
+  position: absolute;
+  right: 0;
+  background: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  border-radius: 4px;
+  z-index: 10;
+}
+
+.menuDropdown button {
+  padding: 8px 12px;
+  width: 100%;
+  border: none;
+  background: white;
+  cursor: pointer;
+}
+
+.menuDropdown button:hover {
+  background: #f5f5f5;
+}
+
+.removeBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.clickableRow {
+  cursor: pointer;
+}
+
+.clickableRow:hover {
+  background-color: #e6e4e3;
+}
+
+.leaveBalanceContainer {
+  display: flex;
+  gap: 16px;
+}
+
+.leaveCard {
+  width: 160px;
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* 🎨 Different colors */
+.casual {
+  background-color: #DCFCE7; /* green */
+}
+
+.sick {
+  background-color: #DBEAFE; /* blue */
+}
+
+.marriage {
+  background-color: #FCE7F3; /* pink */
+}
+
+.maternity {
+  background-color: #FEF9C3; /* yellow */
+}

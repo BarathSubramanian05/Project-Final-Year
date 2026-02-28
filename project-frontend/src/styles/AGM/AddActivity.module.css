@@ -1,0 +1,119 @@
+/* ===================== UNIFORM CONTAINER ===================== */
+.container {
+  max-width: 650px;      /* slightly wider for forms */
+  width: 90%;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 16px;
+  padding: 40px 30px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* Form Title */
+.container h2 {
+  text-align: center;
+  color: #1a202c;
+  font-size: 26px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+/* Field wrapper */
+.fld {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Labels */
+.fld label {
+  font-size: 15px;
+  font-weight: bold;
+  color: #4b5563; /* softer dark */
+  margin-bottom: 5px;
+}
+
+/* Inputs, selects, textarea */
+input,
+select,
+textarea {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  font-size: 14px;
+  outline: none;
+  background-color: #f9f9fb;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #2563eb;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+textarea {
+  resize: none;
+  border-radius: 20px;
+  height: 80px;
+}
+
+input:read-only {
+  background-color: #eee;
+}
+
+/* Submit Button */
+.submitBtn {
+  background: linear-gradient(135deg, #027604, #08ad19);
+  color: white;
+  font-weight: bold;
+  padding: 14px 0;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  width: 180px;
+  margin: 20px auto 0;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.submitBtn:hover {
+  background: #000000;
+  color: #ddd;
+}
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 30px 20px;
+    width: 95%;
+  }
+
+  .container h2 {
+    font-size: 22px;
+  }
+
+  input,
+  select,
+  textarea {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .submitBtn {
+    width: 100%;
+    padding: 14px;
+  }
+}

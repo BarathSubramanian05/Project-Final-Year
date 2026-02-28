@@ -1,0 +1,258 @@
+/* Main Container */
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.logo {
+  width: 45px;
+  height: auto;
+  margin-right: 5px;
+}
+
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  background: #ffffff;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 12px;
+  cursor: pointer;
+  color: #888;
+  font-size: 1.1rem;
+  transition: color 0.2s ease;
+}
+
+.eyeIcon:hover {
+  color: #333;
+}
+
+.loginInput {
+  width: 100%;
+  padding: 10px 40px 10px 10px;
+  /* space for the eye icon */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  font-size: 1rem;
+}
+
+/* Wrapper */
+.loginWrapper {
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Company Header */
+.companyHeader {
+  text-align: center;
+  padding: 1px;
+  background: linear-gradient(135deg, #1a202c 0%, #000000 100%);
+  border-radius: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.companyName {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* spacing between logo & text */
+}
+
+.companyName span {
+  font-size: 20px;
+  font-weight: 700;
+  padding: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+}
+
+/* Login Box */
+.loginBox {
+  background: #ffffff;
+  padding: 40px 35px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  border: 1px solid #e2e8f0;
+}
+
+/* Title */
+.loginTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 35px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+.loginTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: #2563eb;
+  border-radius: 2px;
+}
+
+/* Form */
+.loginForm {
+  text-align: left;
+}
+
+/* Input Group */
+.inputGroup {
+  margin-bottom: 25px;
+}
+
+/* Label */
+.loginLabel {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-align: left;
+  font-size: 14px;
+  color: #4a5568;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Input */
+.loginInput {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.3s ease;
+  background: #f8fafc;
+  color: #2d3748;
+  box-sizing: border-box;
+}
+
+.loginInput:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  transform: translateY(-1px);
+}
+
+.loginInput::placeholder {
+  color: #a0aec0;
+  font-size: 14px;
+}
+
+/* Button */
+.loginBtn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 10px;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.loginBtn:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
+}
+
+.loginBtn:active {
+  transform: translateY(0);
+}
+
+/* Login Instructions */
+.loginInstructions {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f7fafc;
+  border-radius: 8px;
+  border-left: 4px solid #2563eb;
+  text-align: left;
+}
+
+.loginInstructions p {
+  margin: 5px 0;
+  font-size: 13px;
+  color: #4a5568;
+  line-height: 1.4;
+}
+
+.loginInstructions strong {
+  color: #2d3748;
+  font-size: 14px;
+}
+
+.errorMsg {
+  color: red;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .loginContainer {
+    padding: 15px;
+  }
+
+  .companyName {
+    font-size: 18px;
+  }
+
+  .loginBox {
+    padding: 30px 25px;
+  }
+
+  .loginTitle {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .companyName {
+    font-size: 16px;
+  }
+
+  .loginBox {
+    padding: 25px 20px;
+  }
+
+  .loginTitle {
+    font-size: 22px;
+  }
+
+  .loginInput {
+    padding: 12px 14px;
+  }
+
+  .loginBtn {
+    padding: 14px;
+  }
+}
