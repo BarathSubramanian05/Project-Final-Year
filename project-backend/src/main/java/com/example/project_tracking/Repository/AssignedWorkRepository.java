@@ -1,7 +1,9 @@
 package com.example.project_tracking.Repository;
 
+import com.example.project_tracking.DTO.TaskStatusDTO;
 import com.example.project_tracking.Model.AssignedWork;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,5 +25,13 @@ public interface AssignedWorkRepository extends JpaRepository<AssignedWork, Long
     List<AssignedWork> findByProject_IdAndEmployee_EmpIdAndStatusIgnoreCase(Long projectId, Long employeeId, String status);
 
     Optional<AssignedWork> findByEmployee_EmpIdAndManager_EmpIdAndProject_IdAndActivity_Id(Long empId, Long mgrId, Long projectId, Long activityId);
+
+    @Query("""
+SELECT new com.example.project_tracking.DTO.TaskStatusDTO(
+a.status, COUNT(a))
+FROM AssignedWork a
+GROUP BY a.status
+""")
+    List<TaskStatusDTO> getTaskStatus();
 }
 

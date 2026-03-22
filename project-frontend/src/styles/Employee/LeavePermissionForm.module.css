@@ -928,3 +928,121 @@ html, body {
 .maternity {
   background-color: #FEF9C3; /* yellow */
 }
+
+.badge {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* cleaner modern colors */
+.high {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.medium {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.low {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.not_recommended {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.employeeDropdown {
+  position: absolute; /* ✅ dropdown floats */
+  bottom: 100%;
+  left: 0;
+  width: 100%;
+  margin-top: 6px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  background: #fff;
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 1000;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); /* ✅ premium feel */
+}
+
+.employeeItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.employeeItem:hover {
+  background-color: #f1f5f9; /* matches your table hover */
+}
+
+.selected {
+  background: #e6f0ff;
+}
+
+.empName {
+  font-weight: 500;
+}
+
+/* 🔥 BADGES */
+.badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Color system (clean + professional) */
+.high {
+  background: #e6f7ec;
+  color: #1e7e34;
+}
+
+.medium {
+  background: #fff4e5;
+  color: #cc7a00;
+}
+
+.low {
+  background: #ffe5e5;
+  color: #cc0000;
+}
+
+.not_recommended {
+  background: #f2f2f2;
+  color: #666;
+}
+
+.selectBox {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 30px; /* ✅ SAME as input */
+  font-size: 14px;
+  background-color: #f9f9fb; /* ✅ SAME */
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.selectBox:hover {
+  border-color: #2563eb;
+}
+
+.selectBox:focus,
+.selectBox.active {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}

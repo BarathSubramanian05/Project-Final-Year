@@ -21,6 +21,8 @@ import AddActivityForm from './components/AGM/AddActivityForm.js';
 import AssignProjectForm from './components/AGM/AssignProjectForm.js';
 import EditWorkDetails from './components/AGM/EditWorkDetails.js';
 import AssignResources from './components/PC/AssignResources.js';
+import LeaveDashboard from './components/Manager/LeaveDashboard.js';
+import ProductivityDashboard from './components/Manager/ProductivityDashboard.js';
 
   const Unauthorized = () => (
   <div style={{ textAlign: "center", marginTop: "50px" }}>
@@ -104,6 +106,24 @@ function App() {
   element={
     <ProtectedRoute>
       <ProjectAssignmentForm />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/manager/leave-analysis"
+  element={
+    <ProtectedRoute>
+      <LeaveDashboard />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/manager/productivity-analysis"
+  element={
+    <ProtectedRoute>
+      <ProductivityDashboard />
     </ProtectedRoute>
   }
 />

@@ -1,5 +1,8 @@
 package com.example.project_tracking.Repository;
 
+import com.example.project_tracking.DTO.DailyProductivityDTO;
+import com.example.project_tracking.DTO.EmployeeWorkHoursDTO;
+import com.example.project_tracking.DTO.TaskStatusDTO;
 import com.example.project_tracking.Model.AssignedWork;
 import com.example.project_tracking.Model.WorkDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -79,5 +82,25 @@ public interface WorkDetailsRepository extends JpaRepository<WorkDetails,Long> {
     ORDER BY w.id DESC
     """)
     Optional<WorkDetails> findTopByEmployeeEmpIdAndEndTimeIsNullOrderByIdDesc(@Param("employeeId") Long employeeId);
+
+        @Query("""
+SELECT new com.example.project_tracking.DTO.EmployeeWorkHoursDTO(
+aw.employee.name, SUM(w.workHours))
+FROM WorkDetails w
+JOIN w.assignedWorkId aw
+GROUP BY aw.employee.name
+ORDER BY SUM(w.workHours) DESC
+""")
+        List<EmployeeWorkHoursDTO> getEmployeeWorkHours();
+
+        @Query("""
+SELECT new com.example.project_tracking.DTO.DailyProductivityDTO(
+w.date, SUM(w.workHours))
+FROM WorkDetails w
+GROUP BY w.date
+ORDER BY w.date
+""")
+        List<DailyProductivityDTO> getDailyProductivity();
+
 
 }

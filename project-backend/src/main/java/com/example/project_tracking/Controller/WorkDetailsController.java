@@ -1,6 +1,7 @@
 package com.example.project_tracking.Controller;
-import com.example.project_tracking.DTO.WorkDetailsRequest;
-import com.example.project_tracking.DTO.WorkDetailsResponse;
+import com.example.project_tracking.DTO.*;
+import com.example.project_tracking.Repository.AssignedWorkRepository;
+import com.example.project_tracking.Repository.WorkDetailsRepository;
 import com.example.project_tracking.Service.WorkDetailsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +12,13 @@ import java.util.List;
 public class WorkDetailsController {
 
     private final WorkDetailsService workDetailsService;
+    private final WorkDetailsRepository workDetailsRepository;
+    private final AssignedWorkRepository assignedWorkRepository;
 
-    public WorkDetailsController(WorkDetailsService workDetailsService) {
+    public WorkDetailsController(WorkDetailsService workDetailsService, WorkDetailsRepository workDetailsRepository, AssignedWorkRepository assignedWorkRepository) {
         this.workDetailsService = workDetailsService;
+        this.workDetailsRepository = workDetailsRepository;
+        this.assignedWorkRepository = assignedWorkRepository;
     }
 
     @GetMapping("/all")
@@ -115,6 +120,21 @@ public class WorkDetailsController {
         System.out.println(id);
         workDetailsService.discardWork(id);
         return ResponseEntity.ok("Work entry discarded successfully");
+    }
+
+    @GetMapping("/analytics/work-hours")
+    public List<EmployeeWorkHoursDTO> getWorkHours() {
+        return workDetailsRepository.getEmployeeWorkHours();
+    }
+
+    @GetMapping("/analytics/daily-productivity")
+    public List<DailyProductivityDTO> getDailyProductivity() {
+        return workDetailsRepository.getDailyProductivity();
+    }
+
+    @GetMapping("/analytics/task-status")
+    public List<TaskStatusDTO> getTaskStatus() {
+        return assignedWorkRepository.getTaskStatus();
     }
 
 }

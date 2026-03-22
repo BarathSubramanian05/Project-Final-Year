@@ -35,8 +35,8 @@ const EmployeeNavbar = () => {
         <div className={styles.navCenter} style={{marginLeft:
       isHR
         ? "-1%": "11%"}}>
-          <img src="/logo.png" alt="E2G Logo" className={styles.logo} />
-          <h1>E2G ENGINEERING SERVICES PRIVATE LIMITED</h1>
+          
+          <h1>Project Governance System</h1>
         </div>
 
         {!isHR && <Notifications userId={employee.empId} userRole={employee.designation} />}

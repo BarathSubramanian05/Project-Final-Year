@@ -1,5 +1,5 @@
 package com.example.project_tracking.Service;
-import com.example.project_tracking.DTO.AssignedWorkRequest;
+
 import com.example.project_tracking.DTO.WorkDetailsRequest;
 import com.example.project_tracking.DTO.WorkDetailsResponse;
 import com.example.project_tracking.Model.*;
@@ -502,9 +502,6 @@ public class WorkDetailsService {
         }
     }
 
-
-
-
     @Transactional
     public WorkDetailsResponse editWorkDetail(long id, WorkDetailsRequest request) {
         WorkDetails oldWork = workDetailsRepository.findById(id)
@@ -554,8 +551,6 @@ public class WorkDetailsService {
         return convertToResponse(workDetailsRepository.save(oldWork));
     }
 
-
-
     public void discardWork(Long workId) {
         WorkDetails work = workDetailsRepository.findById(workId)
                 .orElseThrow(() -> new RuntimeException("Work entry not found for ID: " + workId));
@@ -600,7 +595,6 @@ public class WorkDetailsService {
                 .orElseThrow(() -> new RuntimeException("Project not found"));
         Activity act = activityRepository.findById(activityId)
                 .orElseThrow(() -> new RuntimeException("Activity not found"));
-
         // 2️⃣ Create new AssignedWork
         AssignedWork assigned = new AssignedWork();
         assigned.setEmployee(emp);
@@ -612,19 +606,12 @@ public class WorkDetailsService {
         assigned.setAssignedDate(java.time.LocalDate.now());
         assigned.setStatus("PENDING");
         assigned.setDeleted(false);
-
-        // 3️⃣ Save and return
         return assignedWorkRepository.save(assigned);
     }
-
-
 
     public WorkDetailsResponse getAssignedWork(Long id) {
         WorkDetails work = workDetailsRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Work entry not found for ID: " + id));
-        //System.out.println(work.toString());
-        //System.out.println(work.getAssignedWorkId().getId());
         return convertToResponse(work);
     }
 }
-

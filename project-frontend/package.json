@@ -14,7 +14,7 @@
     "ag-grid-community": "^34.2.0",
     "ag-grid-enterprise": "^34.2.0",
     "ag-grid-react": "^34.2.0",
-    "axios": "^1.12.2",
+    "axios": "^1.13.6",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.553.0",
     "pivottable": "^2.23.0",
@@ -26,6 +26,7 @@
     "react-pivottable": "^0.11.0",
     "react-router-dom": "^7.9.3",
     "react-scripts": "5.0.1",
+    "recharts": "^3.7.0",
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
   },

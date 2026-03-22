@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/Login.module.css"; // your CSS file
 import { useEmployee } from "../context/EmployeeContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import axiosInstance from "./axiosConfig";
 
 const LoginForm = () => {
@@ -56,9 +56,8 @@ const LoginForm = () => {
     <div>
       
         <div className={styles.companyHeader}>
-          <div className={styles.companyName}>
-            <img src="/logo.png" alt="E2G Logo" className={styles.logo} />
-            <span>E2G ENGINEERING SERVICES PRIVATE LIMITED</span>
+          <div className={styles.companyName}>            
+            <span>Project Governance System</span>
           </div>
         </div>
 
@@ -66,7 +65,7 @@ const LoginForm = () => {
       <div className={styles.loginContainer}>
         <div className={styles.loginWrapper}>
           <div className={styles.loginBox}>
-            <h2 className={styles.loginTitle}>Employee Login</h2>
+            <h2 className={styles.loginTitle}>Login</h2>
 
             <form onSubmit={handleLogin} className={styles.loginForm}>
               <div className={styles.inputGroup}>

@@ -3,7 +3,7 @@ import styles from "../../styles/Employee/LeavePermissionForm.module.css";
 import { useEmployee } from "../../context/EmployeeContext";
 import { useToast } from "../../context/ToastContext";
 import axiosInstance from "../axiosConfig";
-
+import axios from "axios";
 
 const AssignActivityForm = () => {
   const { employee } = useEmployee();
@@ -20,10 +20,13 @@ const AssignActivityForm = () => {
   const [dateFilter, setDateFilter] = useState("All");
   const [customRange, setCustomRange] = useState({ from: "", to: "" });
   const [showCustomBox, setShowCustomBox] = useState(false);
+  const [recommendedEmployees, setRecommendedEmployees] = useState([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const itemsPerPage = 10;
 
-
+  const employeesToShow =
+    recommendedEmployees.length > 0 ? recommendedEmployees : employees;
 
 
   useEffect(() => {
@@ -58,31 +61,53 @@ const AssignActivityForm = () => {
       .catch((err) => console.error(err));
   }, [managerId]);
 
-  // ✅ Fetch Employees
+  // fetch recommended employee
   useEffect(() => {
-    if (!formData.projectId) {
-      setEmployees([]);
-      return;
-    }
+    if (!formData.projectId || !formData.activityId) return;
 
+    const selectedActivity = activities.find(
+      (a) => a.id.toString() === formData.activityId
+    );
 
+    if (!selectedActivity) return;
 
-    axiosInstance
-      .get(`/project-assignment/employees/${formData.projectId}`)
-      .then((res) => {
-
-        if (res.data.length === 0) {
-          // If no employees assigned to this project, get all employees under manager
-          axiosInstance
-            .get(`/employee/getbymgr?mgrid=${idToUse}`)
-            .then((mgrRes) => setEmployees(mgrRes.data))
-            .catch((err) => console.error("Error fetching employees under manager:", err));
-        } else {
-          setEmployees(res.data);
-        }
+    axios
+      .get("http://127.0.0.1:5000/recommendemployees", {
+        params: {
+          activityname: selectedActivity.activityName,
+          projectid: formData.projectId,
+        },
       })
-      .catch((err) => console.error("Error fetching project employees:", err));
-  }, [formData.projectId, employee.reportingToId]);
+      .then((res) => {
+        setRecommendedEmployees(res.data);
+      })
+      .catch((err) => {
+        console.error("Recommendation error:", err);
+      });
+  }, [formData.projectId, formData.activityId]);
+
+  // ✅ Fetch Employees
+  // useEffect(() => {
+  //   if (!formData.projectId) {
+  //     setEmployees([]);
+  //     return;
+  //   }
+  //   axiosInstance
+  //     .get(`/project-assignment/employees/${formData.projectId}`)
+  //     .then((res) => {
+
+  //       if (res.data.length === 0) {
+  //         // If no employees assigned to this project, get all employees under manager
+  //         axiosInstance
+  //           .get(`/employee/getbymgr?mgrid=${idToUse}`)
+  //           .then((mgrRes) => setEmployees(mgrRes.data))
+  //           .catch((err) => console.error("Error fetching employees under manager:", err));
+  //       } else {
+  //         setEmployees(res.data);
+  //       }
+  //     })
+  //     .catch((err) => console.error("Error fetching project employees:", err));
+  // }, [formData.projectId, employee.reportingToId]);
 
 
   // ✅ Fetch Activities based on type
@@ -295,6 +320,19 @@ const AssignActivityForm = () => {
   );
 
 
+  // 🔼 ALL useState + useEffect above
+
+  const priority = {
+    HIGH: 1,
+    MEDIUM: 2,
+    LOW: 3,
+    NOT_RECOMMENDED: 4,
+  };
+
+  const sortedEmployees = [...employeesToShow].sort((a, b) => {
+    return (priority[a.recommendedLevel] || 5) - (priority[b.recommendedLevel] || 5);
+  });
+
 
   return (
     <div
@@ -373,18 +411,50 @@ const AssignActivityForm = () => {
         {/* Employee Dropdown */}
         <div className={styles.fld}>
           <label>Assign To</label>
-          <select
-            name="employeeId"
-            value={formData.employeeId}
-            onChange={handleChange}
+
+          {/* Selected value box */}
+          <div
+            className={styles.selectBox}
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           >
-            <option value="">Select Employee</option>
-            {employees.map((e) => (
-              <option key={e.empId} value={e.empId}>
-                {e.name}
-              </option>
-            ))}
-          </select>
+            {formData.employeeId
+              ? sortedEmployees.find(
+                (e) =>
+                  (e.employeeId || e.empId) === formData.employeeId
+              )?.employeeName || "Select Employee"
+              : "Select Employee"}
+          </div>
+
+          {/* Dropdown list */}
+          {isDropdownOpen && (
+            <div className={styles.employeeDropdown}>
+              {sortedEmployees.map((e) => (
+                <div
+                  key={e.employeeId || e.empId}
+                  className={styles.employeeItem}
+                  onClick={() => {
+                    setFormData({
+                      ...formData,
+                      employeeId: e.employeeId || e.empId,
+                    });
+
+                    setIsDropdownOpen(false); // ✅ CLOSE DROPDOWN
+                  }}
+                >
+                  <span>{e.employeeName || e.name}</span>
+
+                  {e.recommendedLevel && (
+                    <span
+                      className={`${styles.badge} ${styles[e.recommendedLevel.toLowerCase()]
+                        }`}
+                    >
+                      {e.recommendedLevel}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Assigned Hours */}

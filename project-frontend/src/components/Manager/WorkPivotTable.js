@@ -7,6 +7,7 @@ import { useEmployee } from "../../context/EmployeeContext";
 import "../../styles/Manager/PivotTableCustom.css";
 import PivotTable from "react-pivottable/PivotTable"; // extra import for safety
 import { useToast } from "../../context/ToastContext";
+import { Link } from "react-router-dom";
 // ✅ Safe custom patch for FilterBox (no undefined errors)
 
 
@@ -45,6 +46,9 @@ const patchPivotFilterBox = () => {
     };
 
     return (
+      <>
+      
+      
       <div style={{ padding: "8px" }}>
         <div
           style={{
@@ -106,6 +110,7 @@ const patchPivotFilterBox = () => {
           ))}
         </div>
       </div>
+      </>
     );
   };
 
@@ -164,6 +169,8 @@ const WorkPivotTable = () => {
         const pivotData = workDetails.map((item, index) => {
           const projectInfo = projectMap.get(item.projectId) || {};
           const assigned = projectInfo.assignedHours || 0;
+
+          
 
           return {
             id: index,
@@ -232,6 +239,9 @@ const WorkPivotTable = () => {
           Export to Excel
         </button>
       )}
+
+      <Link to="/manager/leave-analysis">Leave Analysis</Link>
+      <Link to="/manager/productivity-analysis">Productivity Analysis</Link>
 
       <div
         style={{

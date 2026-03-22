@@ -234,7 +234,7 @@ public class ProjectService {
 
     public ProjectResponse setExtra(Long id,BigDecimal extraHours) {
         Project project = projectRepository.findById(id).orElseThrow(()-> new RuntimeException("No project found with id "+id));
-        project.setExtraHours(extraHours);
+        project.setExtraHours(project.getExtraHours().add(extraHours));
         //System.out.print(project.toString());
         return convertToResponse(projectRepository.save(project));
     }
@@ -242,7 +242,6 @@ public class ProjectService {
     public ProjectResponse extendCompletedDate(Long id,LocalDate completedDate) {
         Project project = projectRepository.findById(id).orElseThrow(()-> new RuntimeException("No project found with id "+id));
         project.setCompletedDate(completedDate);
-        //System.out.print(project.toString());
         return convertToResponse(projectRepository.save(project));
     }
 
