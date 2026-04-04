@@ -135,7 +135,7 @@ const ManagerProjectActions = () => {
       return;
     }
 
-    const agmId = Number(1004);
+    const agmId = Number(1001);
     const projectName = selectedProject.projectName;// make sure this exists
     const projectId = selectedProject.id;
 

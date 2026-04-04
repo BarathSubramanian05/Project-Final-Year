@@ -3,12 +3,13 @@ import React, { useEffect, useState } from "react";
 import { useEmployee } from "../../context/EmployeeContext.js";
 import styles from "../../styles/Manager/ManagerDashboard.module.css";
 import axiosInstance from "../axiosConfig.js";
+import axios, { all } from "axios";
 
 const ManagerDashboard = () => {
   const { employee } = useEmployee();
   const [projects, setProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
-  const [filter, setFilter] = useState("In Progress");
+  const [filter, setFilter] = useState("All");
   const [managers, setManagers] = useState({});
   const [tl, setTl] = useState({});
   const [selectedManager, setSelectedManager] = useState("");
@@ -22,6 +23,9 @@ const ManagerDashboard = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [showResourcesOverlay, setShowResourcesOverlay] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [projectDelays, setProjectDelays] = useState({}); // { [projectId]: "DELAYED" | "ON_TIME" }
+  const [completionPredictions, setCompletionPredictions] = useState({}); // { [projectId]: remainingHours }
+  const [loadingCompletion, setLoadingCompletion] = useState({});
   const itemsPerPage = 10; // adjust if needed
   const startIndex = (currentPage - 1) * itemsPerPage;
 
@@ -86,10 +90,8 @@ const ManagerDashboard = () => {
       .get(endpoint)
       .then((res) => {
         setProjects(res.data);
-
-        const inProgress = res.data.filter((p) => p.projectStatus === true);
-        setFilteredProjects(inProgress);
-        setFilter("In Progress");
+        setFilteredProjects(res.data);
+        setFilter("All");
 
         if (isAGM) {
           axiosInstance
@@ -133,6 +135,27 @@ const ManagerDashboard = () => {
         setTl((prev) => ({
           ...prev,
           [p.id]: "Not Assigned",
+        }));
+      }
+    });
+  }, [projects]);
+
+  useEffect(() => {
+    if (!projects.length) return;
+
+    // Fetch delay predictions for each project
+    projects.forEach(async (project) => {
+      try {
+        const res = await axios.get(`http://localhost:5000/predictdelay?projectid=${project.id}`);
+        setProjectDelays(prev => ({
+          ...prev,
+          [project.id]: res.data.status // "DELAYED" or "ON_TIME"
+        }));
+      } catch (err) {
+        console.error(`Error fetching delay for project ${project.id}:`, err);
+        setProjectDelays(prev => ({
+          ...prev,
+          [project.id]: "UNKNOWN"
         }));
       }
     });
@@ -188,7 +211,28 @@ const ManagerDashboard = () => {
 
   const handleProjectClick = async (project) => {
     try {
+
       setSelectedProject(project);
+
+      // Fetch completion prediction
+      setLoadingCompletion(prev => ({ ...prev, [project.id]: true }));
+      axios.get(`http://localhost:5000/predictcompletion?projectid=${project.id}`)
+        .then((res) => {
+          setCompletionPredictions(prev => ({
+            ...prev,
+            [project.id]: res.data.remainingHours.toFixed(2) // show 2 decimal places
+          }));
+        })
+        .catch((err) => {
+          console.error(`Error fetching completion for project ${project.id}:`, err);
+          setCompletionPredictions(prev => ({
+            ...prev,
+            [project.id]: "N/A"
+          }));
+        })
+        .finally(() => {
+          setLoadingCompletion(prev => ({ ...prev, [project.id]: false }));
+        });
 
       // 🔹 Get Worklogs for this project
       const worklogRes = await axiosInstance.get(`/workdetails/project/${project.id}`);
@@ -200,16 +244,10 @@ const ManagerDashboard = () => {
       const allMembers = empRes.data.filter(emp => emp.empId !== project.tlId);
 
       // 🔹 Filter out members with 0 total work hours in this project
-      const membersWithWork = allMembers.filter(member => {
-        const totalWork = projectWorklogs
-          .filter(log => log.employeeId === member.empId)
-          .reduce((sum, log) => sum + (parseFloat(log.workHours) || 0), 0);
-
-        return totalWork > 0;
-      });
+      
 
 
-      setSelectedProjectMembers(membersWithWork);
+      setSelectedProjectMembers(allMembers);
 
       // 🔹 Get Project Coordinator (TL)
       if (project.tlId) {
@@ -303,6 +341,7 @@ const ManagerDashboard = () => {
             <th>Extra Hours</th>
             <th>Working Hours</th>
             <th>Project Status</th>
+            <th>Completion Prediction</th>
           </tr>
         </thead>
 
@@ -319,7 +358,7 @@ const ManagerDashboard = () => {
                 onClick={() => handleProjectClick(p)}
                 key={p.id}
                 className={`
-      ${p.modellingHours === 0 || p.modellingHours===null ? styles.highlightRow : ""}
+      ${p.modellingHours === 0 || p.modellingHours === null ? styles.highlightRow : ""}
       ${((p.assignedHours || 0) + (p.extraHours || 0) - p.workingHours) <= 10
                     ? styles.redAlertRow
                     : ""}
@@ -351,7 +390,23 @@ const ManagerDashboard = () => {
                       : "In-Progress"
                     : "Completed"}
                 </td>
-
+                <td>
+                  {projectDelays[p.id] ? (
+                    <span
+                      className={
+                        projectDelays[p.id] === "DELAYED"
+                          ? styles.labelDelayed
+                          : projectDelays[p.id] === "ON_TIME"
+                            ? styles.labelOnTime
+                            : styles.labelUnknown
+                      }
+                    >
+                      {projectDelays[p.id].replace("_", " ")}
+                    </span>
+                  ) : (
+                    "Loading..."
+                  )}
+                </td>
               </tr>
             ))
           )}
@@ -494,6 +549,16 @@ const ManagerDashboard = () => {
 
                   {/* ===== ACTION BUTTONS ===== */}
                   <div className={styles.projectActionButtons}>
+                    <div style={{ marginBottom: "10px", fontWeight: "500" }}>
+                      Estimated Completion Time:{" "}
+                      {loadingCompletion[selectedProject.id] ? (
+                        <span style={{ color: "#888" }}>Loading...</span>
+                      ) : (
+                        <span style={{ color: "#007bff" }}>
+                          {completionPredictions[selectedProject.id]} hours
+                        </span>
+                      )}
+                    </div>
                     <button
                       className={styles.actionBtn}
                       onClick={() => setShowResourcesOverlay(true)}
@@ -576,8 +641,8 @@ const ManagerDashboard = () => {
                         onChange={(e) => setFilterStatus(e.target.value)}
                       >
                         <option value="">All</option>
-                        <option value="Completed">Completed</option>
-                        <option value="Pending">Pending</option>
+                        <option value="COMPLETED">Completed</option>
+                        <option value="PENDING">Pending</option>
                       </select>
                     </div>
 
@@ -597,100 +662,100 @@ const ManagerDashboard = () => {
 
                   <div className={styles.resourcesTableWrapper}>
 
-                  <table className={styles.resourcesTable}>
-                    <thead>
-                      <tr>
-                        <th>Date</th>
-                        <th>Employee</th>
-                        <th>Assigned Work</th>
-                        <th>Activity Name</th>
-                        <th>Status</th>
-                        <th>Hours Worked</th>
-                        <th>Remarks</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {currentLogs.length === 0 ? (
+                    <table className={styles.resourcesTable}>
+                      <thead>
                         <tr>
-                          <td colSpan="6" className={styles.noData}>No worklogs found.</td>
+                          <th>Date</th>
+                          <th>Employee</th>
+                          <th>Assigned Work</th>
+                          <th>Activity Name</th>
+                          <th>Status</th>
+                          <th>Hours Worked</th>
+                          <th>Remarks</th>
                         </tr>
-                      ) : (
-                        currentLogs.map((log) => (
-                          <tr key={log.id}>
-                            <td>{log.date}</td>
-                            <td>{log.employeeName}</td>
-                            <td>{log.assignedWork}</td>
-                            <td>{log.activityName}</td>
-                            <td>{log.status}</td>
-                            <td>{log.workHours}</td>
-                            <td>{log.remarks}</td>
+                      </thead>
+                      <tbody>
+                        {currentLogs.length === 0 ? (
+                          <tr>
+                            <td colSpan="6" className={styles.noData}>No worklogs found.</td>
                           </tr>
-                        ))
-                      )}
-                    </tbody>
-                  </table>
-                 
+                        ) : (
+                          currentLogs.map((log) => (
+                            <tr key={log.id}>
+                              <td>{log.date}</td>
+                              <td>{log.employeeName}</td>
+                              <td>{log.assignedWork}</td>
+                              <td>{log.activityName}</td>
+                              <td>{log.status}</td>
+                              <td>{log.workHours}</td>
+                              <td>{log.remarks}</td>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
 
-                  {/* ✅ Numbered Pagination */}
-                  {worklogs.length > itemsPerPage && (
-                    <div className={styles.paginationContainer}>
-                      <button
-                        className={styles.paginationBtn}
-                        disabled={currentPage === 1}
-                        onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                      >
-                        « Prev
-                      </button>
 
-                      {Array.from({ length: totalPages }, (_, i) => i + 1)
-                        .filter(
-                          (page) =>
-                            page === 1 ||
-                            page === totalPages ||
-                            (page >= currentPage - 2 && page <= currentPage + 2)
-                        )
-                        .map((page, idx, arr) => {
-                          // Add ellipsis between gaps
-                          if (idx > 0 && arr[idx - 1] !== page - 1) {
+                    {/* ✅ Numbered Pagination */}
+                    {worklogs.length > itemsPerPage && (
+                      <div className={styles.paginationContainer}>
+                        <button
+                          className={styles.paginationBtn}
+                          disabled={currentPage === 1}
+                          onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                        >
+                          « Prev
+                        </button>
+
+                        {Array.from({ length: totalPages }, (_, i) => i + 1)
+                          .filter(
+                            (page) =>
+                              page === 1 ||
+                              page === totalPages ||
+                              (page >= currentPage - 2 && page <= currentPage + 2)
+                          )
+                          .map((page, idx, arr) => {
+                            // Add ellipsis between gaps
+                            if (idx > 0 && arr[idx - 1] !== page - 1) {
+                              return (
+                                <React.Fragment key={`ellipsis-${page}`}>
+                                  <span className={styles.ellipsis}>...</span>
+                                  <button
+                                    key={page}
+                                    className={`${styles.pageNumber} ${currentPage === page ? styles.activePage : ""
+                                      }`}
+                                    onClick={() => setCurrentPage(page)}
+                                  >
+                                    {page}
+                                  </button>
+                                </React.Fragment>
+                              );
+                            }
                             return (
-                              <React.Fragment key={`ellipsis-${page}`}>
-                                <span className={styles.ellipsis}>...</span>
-                                <button
-                                  key={page}
-                                  className={`${styles.pageNumber} ${currentPage === page ? styles.activePage : ""
-                                    }`}
-                                  onClick={() => setCurrentPage(page)}
-                                >
-                                  {page}
-                                </button>
-                              </React.Fragment>
+                              <button
+                                key={page}
+                                className={`${styles.pageNumber} ${currentPage === page ? styles.activePage : ""
+                                  }`}
+                                onClick={() => setCurrentPage(page)}
+                              >
+                                {page}
+                              </button>
                             );
+                          })}
+
+                        <button
+                          className={styles.paginationBtn}
+                          disabled={currentPage === totalPages}
+                          onClick={() =>
+                            setCurrentPage((p) => Math.min(p + 1, totalPages))
                           }
-                          return (
-                            <button
-                              key={page}
-                              className={`${styles.pageNumber} ${currentPage === page ? styles.activePage : ""
-                                }`}
-                              onClick={() => setCurrentPage(page)}
-                            >
-                              {page}
-                            </button>
-                          );
-                        })}
+                        >
+                          Next »
+                        </button>
+                      </div>
+                    )}
 
-                      <button
-                        className={styles.paginationBtn}
-                        disabled={currentPage === totalPages}
-                        onClick={() =>
-                          setCurrentPage((p) => Math.min(p + 1, totalPages))
-                        }
-                      >
-                        Next »
-                      </button>
-                    </div>
-                  )}
-
-                   </div>
+                  </div>
 
                   <button
                     className={styles.closeBtn}

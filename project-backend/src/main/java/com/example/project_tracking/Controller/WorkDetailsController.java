@@ -137,5 +137,12 @@ public class WorkDetailsController {
         return assignedWorkRepository.getTaskStatus();
     }
 
+    @PostMapping("/admin/rebuild-hours")
+    public String rebuild() {
+
+        workDetailsService.rebuildAllProjectHoursFromWorkDetails();
+
+        return "Rebuild completed";
+    }
 }
 

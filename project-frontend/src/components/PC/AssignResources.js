@@ -62,30 +62,40 @@ const AssignActivityForm = () => {
   }, [managerId]);
 
   // fetch recommended employee
-  useEffect(() => {
-    if (!formData.projectId || !formData.activityId) return;
+useEffect(() => {
+  if (!formData.projectId || !formData.activityId) return;
 
-    const selectedActivity = activities.find(
-      (a) => a.id.toString() === formData.activityId
-    );
+  const selectedActivity = activities.find(
+    (a) => a.id.toString() === formData.activityId
+  );
 
-    if (!selectedActivity) return;
+  if (!selectedActivity) return;
 
-    axios
-      .get("http://127.0.0.1:5000/recommendemployees", {
-        params: {
-          activityname: selectedActivity.activityName,
-          projectid: formData.projectId,
-        },
-      })
-      .then((res) => {
-        setRecommendedEmployees(res.data);
-      })
-      .catch((err) => {
-        console.error("Recommendation error:", err);
-      });
-  }, [formData.projectId, formData.activityId]);
+  const fetchRecommendedEmployees = async () => {
+    try {
+      const { data } = await axios.get(
+        "http://localhost:5000/recommendemployees",
+        {
+          params: {
+            activityname: selectedActivity.activityName,
+            projectid: formData.projectId,
+          },
+        }
+      );
 
+      const filteredEmployees = data.filter(
+        (e) => e.isWorkingInProject === true
+      );
+
+      setRecommendedEmployees(filteredEmployees);
+
+    } catch (err) {
+      console.error("Recommendation error:", err);
+    }
+  };
+
+  fetchRecommendedEmployees();
+}, [formData.projectId, formData.activityId, activities]);
   // ✅ Fetch Employees
   // useEffect(() => {
   //   if (!formData.projectId) {

@@ -1,49 +1,49 @@
-id,activity_name,category,main_type,soft_delete
-1,Design Drawing Study,Productive,Modelling,FALSE
-2,Project Meeting,Productive,Modelling,FALSE
-3,Kick Off Meeting,Productive,Modelling,FALSE
-4,Model Member Placement,Productive,Modelling,FALSE
-5,Macro Creation,Productive,Modelling,FALSE
-6,Main Steel Modelling,Productive,Modelling,FALSE
-7,Misc Steel Modelling,Productive,Modelling,FALSE
-8,E Sheet Editing,Productive,Detailing,FALSE
-9,Shop Drawing Editing,Productive,Detailing,FALSE
-10,Model Checking,Productive,Checking,FALSE
-11,E Sheet Checking,Productive,Checking,FALSE
-12,Shop Drawing Checking,Productive,Checking,FALSE
-13,RFI Creation,Productive,Checking,FALSE
-14,Submission Process,Productive,Modelling,FALSE
-15,Field Work,Productive,Modelling,FALSE
-16,COR Evaluation,Productive,Checking,FALSE
-17,COR Updation,Productive,Checking,FALSE
-18,Model Maintenance,Non-Productive,Modelling,FALSE
-19,Other Discipline Coord,Productive,Modelling,FALSE
-20,Team Coord,Productive,Modelling,FALSE
-21,Shop Requirement Reports,Productive,Modelling,FALSE
-22,Template Creation,Non-Productive,Modelling,FALSE
-23,Idle,Non-Productive,Common,FALSE
-24,Training,Non-Productive,Common,FALSE
-25,Leave/Vacation,Non-Productive,Common,FALSE
-26,Permission,Non-Productive,Common,FALSE
-27,Break/Lunch/Dinner/Breakfast,Non-Productive,Common,FALSE
-28,BFA Comment Update,Productive,Modelling,FALSE
-29,Mail Checking,Productive,Modelling,FALSE
-30,Clash Check,Productive,Modelling,FALSE
-31,1 to 1 Changes Review,Productive,Modelling,FALSE
-32,Model Correction,Productive,Modelling,FALSE
-33,Project discussion/Doubt clarification,Productive,Modelling,FALSE
-34,Back Draft,Productive,Detailing,FALSE
-35,Design Drawing Study(Checking),Productive,Checking,FALSE
-36,Team Coord,Productive,Modelling,FALSE
-37,Mail Checking(Checking),Productive,Modelling,FALSE
-38,Clash Check(Checking),Productive,Modelling,FALSE
-39,1 to 1 Changes Review(Checking),Productive,Modelling,FALSE
-40,Project discussion/Doubt clarification(Checking),Productive,Modelling,FALSE
-41,Back Checking(Checking),Productive,Detailing,FALSE
-42,Project Study,Productive,Studying,FALSE
-43,Special Activity,Productive,Modelling,FALSE
-44,Special Activity,Productive,Checking,FALSE
-45,Special Activity,Productive,Detailing,FALSE
-46,Idle,Productive,Modelling,FALSE
-47,Idle,Productive,Checking,FALSE
-48,Idle,Productive,Detailing,FALSE
+id,activity_name,category,main_type,soft_delete,difficulty
+1,Design Drawing Study,Productive,Modeling,0,HARD
+2,Project Meeting,Productive,Modeling,0,HARD
+3,Kick Off Meeting,Productive,Modeling,0,EASY
+4,Model Member Placement,Productive,Modeling,0,HARD
+5,Macro Creation,Productive,Modeling,0,EASY
+6,Main Steel Modelling,Productive,Modeling,0,EASY
+7,Misc Steel Modelling,Productive,Modeling,0,MEDIUM
+8,E Sheet Editing,Productive,Detailing,0,MEDIUM
+9,Shop Drawing Editing,Productive,Detailing,0,MEDIUM
+10,Model Checking,Productive,Checking,0,MEDIUM
+11,E Sheet Checking,Productive,Checking,0,HARD
+12,Shop Drawing Checking,Productive,Checking,0,EASY
+13,RFI Creation,Productive,Checking,0,EASY
+14,Submission Process,Productive,Modeling,0,MEDIUM
+15,Field Work,Productive,Modeling,0,MEDIUM
+16,COR Evaluation,Productive,Checking,0,EASY
+17,COR Updation,Productive,Checking,0,EASY
+18,Model Maintenance,Non-Productive,Modeling,0,HARD
+19,Other Discipline Coord,Productive,Modeling,0,MEDIUM
+20,Team Coord,Productive,Modeling,0,EASY
+21,Shop Requirement Reports,Productive,Modeling,0,MEDIUM
+22,Template Creation,Non-Productive,Modeling,0,HARD
+23,Idle,Non-Productive,Common,0,HARD
+24,Training,Non-Productive,Common,0,HARD
+25,Leave/Vacation,Non-Productive,Common,0,HARD
+26,Permission,Non-Productive,Common,0,EASY
+27,Break/Lunch/Dinner/Breakfast,Non-Productive,Common,0,MEDIUM
+28,BFA Comment Update,Productive,Modeling,0,EASY
+29,Mail Checking,Productive,Modeling,0,MEDIUM
+30,Clash Check,Productive,Modeling,0,HARD
+31,1 to 1 Changes Review,Productive,Modeling,0,HARD
+32,Model Correction,Productive,Modeling,0,MEDIUM
+33,Project discussion/Doubt clarification,Productive,Modeling,0,MEDIUM
+34,Back Draft,Productive,Detailing,0,EASY
+35,Design Drawing Study(Checking),Productive,Checking,0,MEDIUM
+36,Team Coord,Productive,Modeling,0,EASY
+37,Mail Checking(Checking),Productive,Modeling,0,EASY
+38,Clash Check(Checking),Productive,Modeling,0,EASY
+39,1 to 1 Changes Review(Checking),Productive,Modeling,0,MEDIUM
+40,Project discussion/Doubt clarification(Checking),Productive,Modeling,0,MEDIUM
+41,Back Checking(Checking),Productive,Detailing,0,EASY
+42,Project Study,Productive,Studying,0,EASY
+43,Special Activity,Productive,Modeling,0,EASY
+44,Special Activity,Productive,Checking,0,EASY
+45,Special Activity,Productive,Detailing,0,EASY
+46,Idle,Productive,Modeling,0,MEDIUM
+47,Idle,Productive,Checking,0,HARD
+48,Idle,Productive,Detailing,0,EASY

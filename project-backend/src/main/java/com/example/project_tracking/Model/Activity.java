@@ -22,6 +22,9 @@ public class Activity {
     @Column(name = "soft_delete")
     private Boolean softDelete = false;
 
+    @Column(name = "difficulty")
+    private String difficulty;
+
     // Constructors
     public Activity() {}
 
@@ -30,6 +33,14 @@ public class Activity {
         this.category = category;
         this.mainType = mainType;
         this.softDelete = softDelete;
+    }
+
+    public Activity(String activityName, String category, String mainType, Boolean softDelete,String difficulty) {
+        this.activityName = activityName;
+        this.category = category;
+        this.mainType = mainType;
+        this.softDelete = softDelete;
+        this.difficulty = difficulty;
     }
 
     // Getters and Setters
@@ -71,6 +82,14 @@ public class Activity {
 
     public void setSoftDelete(Boolean softDelete) {
         this.softDelete = softDelete;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
     }
 
     @Override

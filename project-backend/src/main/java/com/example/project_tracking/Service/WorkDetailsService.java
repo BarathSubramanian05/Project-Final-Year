@@ -40,13 +40,13 @@ public class WorkDetailsService {
 
     public List<WorkDetailsResponse> getAll() {
         return workDetailsRepository.findAll()
-                .stream().filter(workDetails ->Boolean.FALSE.equals(workDetails.getIs_Deleted()))
+                .stream().filter(workDetails ->!Boolean.TRUE.equals(workDetails.getIs_Deleted()))
                 .map(this::convertToResponse)
                 .collect(Collectors.toList());
     }
 
     public List<WorkDetailsResponse> getAllLogsByProjectStatus() {
-        return new ArrayList<>(workDetailsRepository.findAllByActiveProjectStatus()).stream().filter(workDetails ->Boolean.FALSE.equals(workDetails.getIs_Deleted()))
+        return new ArrayList<>(workDetailsRepository.findAllByActiveProjectStatus()).stream().filter(workDetails ->!Boolean.TRUE.equals(workDetails.getIs_Deleted()))
                 .map(this::convertToResponse)
                 .collect(Collectors.toList());
     }
@@ -147,9 +147,9 @@ public class WorkDetailsService {
         else {
             BigDecimal extraNeeded = currentTime.add(newWorkHours).subtract(targetHours);
 
-            if (currentExtraUsed.add(extraNeeded).compareTo(extraLimit) > 0) {
-                throw new RuntimeException("Extra hours for project exceeded — approval required from AGM.");
-            }
+//            if (currentExtraUsed.add(extraNeeded).compareTo(extraLimit) > 0) {
+//                throw new RuntimeException("Extra hours for project exceeded — approval required from AGM.");
+//            }
 
             // Update the specific activity tracking to its target limit
             setActivityTime(project, mainType, targetHours);
@@ -176,7 +176,7 @@ public class WorkDetailsService {
 
     public List<WorkDetailsResponse> getByEmployee(Long employeeId) {
         return workDetailsRepository.findByAssignedWorkId_Employee_EmpId(employeeId)
-                .stream().filter(workDetails ->Boolean.FALSE.equals(workDetails.getIs_Deleted()))
+                .stream().filter(workDetails ->!Boolean.TRUE.equals(workDetails.getIs_Deleted()))
                 .map(this::convertToResponse)
                 .collect(Collectors.toList());
     }
@@ -192,7 +192,7 @@ public class WorkDetailsService {
     // ✅ 5. Get all logs by project ID
     public List<WorkDetailsResponse> getByProject(Long projectId) {
         return workDetailsRepository.findByAssignedWorkId_Project_Id(projectId)
-                .stream().filter(workDetails ->Boolean.FALSE.equals(workDetails.getIs_Deleted()))
+                .stream().filter(workDetails ->!Boolean.TRUE.equals(workDetails.getIs_Deleted()))
                 .map(this::convertToResponse)
                 .collect(Collectors.toList());
     }
@@ -208,7 +208,7 @@ public class WorkDetailsService {
     // ✅ 7. Get logs by employee & project
     public List<WorkDetailsResponse> getByEmployeeAndProject(Long empId, Long projId) {
         return workDetailsRepository.findByEmployeeAndProject(empId, projId)
-                .stream().filter(workDetails ->Boolean.FALSE.equals(workDetails.getIs_Deleted()))
+                .stream().filter(workDetails ->!Boolean.TRUE.equals(workDetails.getIs_Deleted()))
                 .map(this::convertToResponse)
                 .collect(Collectors.toList());
     }
@@ -224,7 +224,7 @@ public class WorkDetailsService {
     // ✅ 9. Get logs by project & activity
     public List<WorkDetailsResponse> getByProjectAndActivity(Long projId, Long actId) {
         return workDetailsRepository.findByProjectAndActivity(projId, actId)
-                .stream().filter(workDetails ->Boolean.FALSE.equals(workDetails.getIs_Deleted()))
+                .stream().filter(workDetails ->!Boolean.TRUE.equals(workDetails.getIs_Deleted()))
                 .map(this::convertToResponse)
                 .collect(Collectors.toList());
     }
@@ -613,5 +613,50 @@ public class WorkDetailsService {
         WorkDetails work = workDetailsRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Work entry not found for ID: " + id));
         return convertToResponse(work);
+    }
+
+    @Transactional
+    public void rebuildAllProjectHoursFromWorkDetails() {
+
+        // 1️⃣ Reset all project tracking fields
+        List<Project> projects = projectRepository.findAll();
+
+        for (Project p : projects) {
+
+            p.setModellingTime(BigDecimal.ZERO);
+            p.setCheckingTime(BigDecimal.ZERO);
+            p.setDetailingTime(BigDecimal.ZERO);
+            p.setStudyHoursTracking(BigDecimal.ZERO);
+
+            p.setWorkingHours(BigDecimal.ZERO);
+            p.setExtraHoursTracking(BigDecimal.ZERO);
+
+            projectRepository.save(p);
+        }
+
+        // 2️⃣ Get all valid work logs
+        List<WorkDetails> works = workDetailsRepository.findAll()
+                .stream()
+                .filter(w -> Boolean.FALSE.equals(w.getIs_Deleted()))
+                .filter(w -> w.getWorkHours() != null)
+                .filter(w -> w.getAssignedWorkId() != null)
+                .collect(Collectors.toList());
+
+        // 3️⃣ Recalculate hours from scratch
+        for (WorkDetails work : works) {
+
+            AssignedWork aw = work.getAssignedWorkId();
+
+            if (aw.getProject() == null || aw.getActivity() == null)
+                continue;
+
+            updateProjectWorkingHours(
+                    aw.getProject(),
+                    aw.getActivity(),
+                    work.getWorkHours()
+            );
+        }
+
+        System.out.println("✅ Project hours rebuilt successfully from WorkDetails");
     }
 }

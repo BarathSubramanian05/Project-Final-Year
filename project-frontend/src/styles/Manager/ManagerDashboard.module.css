@@ -899,3 +899,29 @@
   background: #c9302c;
 }
 
+.labelDelayed {
+  background-color: #ff4d4f; /* red */
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.labelOnTime {
+  background-color: #52c41a; /* green */
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.labelUnknown {
+  background-color: #d9d9d9; /* grey */
+  color: #333;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 0.9rem;
+}

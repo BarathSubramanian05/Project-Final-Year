@@ -28,11 +28,11 @@ public class ActivityCSVLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
          //Prevent duplicate inserts
-        if (activityRepository.count() > 0) {
-            return;
-        }
+//        if (activityRepository.count() > 0) {
+//            return;
+//        }
 
-        //resetter.resetActivityTable();
+        resetter.resetActivityTable();
 
         List<String[]> rows;
 
@@ -52,7 +52,7 @@ public class ActivityCSVLoader implements CommandLineRunner {
             activity.setCategory(row[2]);
             activity.setMainType(row[3]);
             activity.setSoftDelete(Boolean.parseBoolean(row[4]));
-
+            activity.setDifficulty(row[5]);
             activityRepository.save(activity);
         }
 
