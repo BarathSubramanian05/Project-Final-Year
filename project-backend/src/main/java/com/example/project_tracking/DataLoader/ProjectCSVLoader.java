@@ -84,6 +84,11 @@ public class ProjectCSVLoader implements CommandLineRunner {
                 project.setDetailingHours(parseBigDecimal(row[16]));
                 project.setStudyHours(parseBigDecimal(row[17]));
 
+                project.setModellingTime(parseBigDecimal(row[19]));
+                project.setCheckingTime(parseBigDecimal(row[20]));
+                project.setDetailingTime(parseBigDecimal(row[21]));
+                project.setStudyHoursTracking(parseBigDecimal(row[22]));
+
                 projectRepository.save(project);
                 successCount++;
 
