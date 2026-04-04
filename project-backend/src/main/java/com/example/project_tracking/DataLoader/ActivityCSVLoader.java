@@ -28,11 +28,11 @@ public class ActivityCSVLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
          //Prevent duplicate inserts
-//        if (activityRepository.count() > 0) {
-//            return;
-//        }
+        if (activityRepository.count() > 0) {
+            return;
+        }
 
-        resetter.resetActivityTable();
+        //resetter.resetActivityTable();
 
         List<String[]> rows;
 

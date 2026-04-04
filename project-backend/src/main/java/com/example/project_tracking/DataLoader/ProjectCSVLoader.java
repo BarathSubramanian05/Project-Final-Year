@@ -75,13 +75,14 @@ public class ProjectCSVLoader implements CommandLineRunner {
                 project.setStartDate(parseDate(row[8]));
                 project.setCompletedDate(parseDate(row[9]));
                 project.setProjectStatus(Boolean.parseBoolean(row[10].trim()));
-                project.setSoftDelete(Boolean.parseBoolean(row[11].trim()));
+                project.setProjectActivityStatus(row[11]);
+                project.setSoftDelete(Boolean.parseBoolean(row[12].trim()));
 
                 // Split-up assigned hours (columns 9-11)
-                project.setModellingHours(parseBigDecimal(row[13]));
-                project.setCheckingHours(parseBigDecimal(row[14]));
-                project.setDetailingHours(parseBigDecimal(row[15]));
-                project.setStudyHours(parseBigDecimal(row[16]));
+                project.setModellingHours(parseBigDecimal(row[14]));
+                project.setCheckingHours(parseBigDecimal(row[15]));
+                project.setDetailingHours(parseBigDecimal(row[16]));
+                project.setStudyHours(parseBigDecimal(row[17]));
 
                 projectRepository.save(project);
                 successCount++;

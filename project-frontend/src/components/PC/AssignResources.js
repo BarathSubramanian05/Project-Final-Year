@@ -278,7 +278,7 @@ useEffect(() => {
         ? true
         : statusFilter === "PENDING"
           ? work.status?.toUpperCase().includes("PENDING")
-          : work.status === statusFilter;
+          : work.status === statusFilter.toUpperCase();
 
     // ✅ Search filter
     const search = searchTerm.toLowerCase();
