@@ -2,6 +2,9 @@ package com.example.project_tracking.Model;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "employee")
 public class Employee {
@@ -25,6 +28,9 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "reporting_to")
     private Employee reportingTo; // Self-reference for manager
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<UserRole> userRoles = new HashSet<>();
 
     @Column(name = "username", unique = true, nullable = false)
     private String username;
@@ -113,6 +119,14 @@ public class Employee {
 
     public void setManager(Boolean manager) {
         isManager = manager;
+    }
+
+    public Set<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(Set<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
 
     public Boolean getTL() {
