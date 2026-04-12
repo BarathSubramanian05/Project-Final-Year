@@ -1,66 +1,57 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styles from "../styles/Login.module.css"; // your CSS file
-import { useEmployee } from "../context/EmployeeContext";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import styles from "../styles/Login.module.css";
 import axiosInstance from "./axiosConfig";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // error messages
-  const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
-  const { login } = useEmployee();
-
+  const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(""); // clear previous errors
+    setError("");
 
     if (!username || !password) {
       setError("Please enter username and password");
       return;
     }
-    console.log(username);
-    console.log(password);
+
     try {
       const response = await axiosInstance.post(
-        "/employee/login",
-        { username, password }
+        "/auth/login",
+        { username, password },
+        { withCredentials: true }
       );
 
       const employeeData = response.data;
-      console.log(employeeData);
-
-
+      console.log(employeeData)
       if (!employeeData) {
         setError("Invalid username or password");
         return;
       }
 
-      login(employeeData);
-      
+      // 💾 Store in sessionStorage
+      sessionStorage.setItem("employee", JSON.stringify(employeeData));
+
+      // 🔄 Force re-render/navigation trigger
+      window.location.href = "/";
+
     } catch (err) {
       if (err.response && err.response.status === 401) {
         setError("Invalid username or password");
       } else {
-        setError("Something went wrong. Please try again later.");
-
+        setError("Something went wrong. Please try again.");
       }
     }
   };
 
   return (
     <div>
-      
-        <div className={styles.companyHeader}>
-          <div className={styles.companyName}>            
-            <span>Project Governance System</span>
-          </div>
+      <div className={styles.companyHeader}>
+        <div className={styles.companyName}>
+          <span>Project Governance System</span>
         </div>
-
+      </div>
 
       <div className={styles.loginContainer}>
         <div className={styles.loginWrapper}>
@@ -69,41 +60,24 @@ const LoginForm = () => {
 
             <form onSubmit={handleLogin} className={styles.loginForm}>
               <div className={styles.inputGroup}>
-                <label className={styles.loginLabel} htmlFor="username">
-                  Username
-                </label>
+                <label className={styles.loginLabel}>Username</label>
                 <input
                   type="text"
-                  id="username"
                   className={styles.loginInput}
-                  placeholder="Enter username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
 
               <div className={styles.inputGroup}>
-                <label className={styles.loginLabel} htmlFor="password">
-                  Password
-                </label>
-
-                <div className={styles.passwordWrapper}>
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    id="password"
-                    className={styles.loginInput}
-                    placeholder="Enter password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  {/* <FontAwesomeIcon
-      //icon={showPassword ? faEyeSlash : faEye}
-      //className={styles.eyeIcon}
-      //onClick={() => setShowPassword((prev) => !prev)}
-    /> */}
-                </div>
+                <label className={styles.loginLabel}>Password</label>
+                <input
+                  type="password"
+                  className={styles.loginInput}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </div>
-
 
               {error && <p className={styles.errorMsg}>{error}</p>}
 

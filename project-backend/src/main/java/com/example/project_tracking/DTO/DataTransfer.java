@@ -11,10 +11,12 @@ public class DataTransfer {
     private Boolean isTL = false;
     private Long reportingToId;// Only send the manager's ID
     private String role;
+    private String authority;
 
 
-    public DataTransfer( Long assignmentId,Long empId, String name, String designation,
-                        Boolean isManager, Boolean isTL, Employee reportingTo,String role) {
+
+    public DataTransfer(Long assignmentId, Long empId, String name, String designation,
+                        Boolean isManager, Boolean isTL, Employee reportingTo, String role) {
         this.assignmentId=assignmentId;
         this.empId = empId;
         this.name = name;
@@ -82,6 +84,14 @@ public class DataTransfer {
 
     public Boolean getManager() {
         return isManager;
+    }
+
+    public String getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 
     public void setManager(Boolean manager) {

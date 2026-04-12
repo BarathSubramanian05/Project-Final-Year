@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../axiosConfig";
 import styles from "../../styles/AGM/EditProject.module.css";
-import { useEmployee } from "../../context/EmployeeContext";
 import { useNavigate } from "react-router-dom";
 import AddActivityForm from './AddActivityForm';
 import { useToast } from "../../context/ToastContext";
 
 const EditActivity = () => {
-  const { employee, loading } = useEmployee();
+  const employee = JSON.parse(sessionStorage.getItem("employee"));
   const navigate = useNavigate();
   const [activities, setActivities] = useState([]);
   const [filteredActivities, setFilteredActivities] = useState([]);
@@ -28,10 +27,6 @@ const EditActivity = () => {
     softDelete: false,
   });
 
-  // Redirect if not logged in
-  useEffect(() => {
-    if (!loading && !employee) navigate("/");
-  }, [employee, loading, navigate]);
 
   // Fetch activities
   useEffect(() => {

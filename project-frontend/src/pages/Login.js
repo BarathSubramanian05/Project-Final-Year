@@ -1,37 +1,36 @@
 import React, { useEffect } from "react";
 import LoginForm from "../components/LoginForm";
-import { useEmployee } from "../context/EmployeeContext";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { employee } = useEmployee();
   const navigate = useNavigate();
 
   useEffect(() => {
-  if (!employee) return;
+    const employee = JSON.parse(sessionStorage.getItem("employee"));
 
-  if (employee.manager) {
-    navigate("/manager/work", { replace: true });
-  } else if (
-    employee.designation.trim() === "Assistant IT Manager" ||
-    employee.designation.trim() === "Assistant General Manager"
-  ) {
-    navigate("/manager/work", { replace: true });
-  } 
-  else if(employee.designation.trim() === "HR Manager")
-  {
-    navigate("/manager/view-approved-request", { replace: true });
-  }
+    if (!employee) return;
 
-  else if(employee.role.trim() === "IT Admin " || employee.role.trim() === "Accounts")
-  {
-    navigate("/employee/leave", { replace: true })
-  }
-  
-  else {
-    navigate("/employee/work", { replace: true });
-  }
-}, [employee, navigate]);
+    const authority = employee?.authority?.trim();
+    const role = employee?.role?.trim();
+
+    const isAdmin = authority === "ROLE_ADMIN";
+    const isManager = authority === "ROLE_MANAGER";
+    const isAccounts = role === "Accounts";
+
+    if (isAdmin) {
+      navigate("/manager/view-approved-request", { replace: true });
+    } 
+    else if (isManager || employee?.manager) {
+      navigate("/manager/work", { replace: true });
+    } 
+    else if (isAccounts) {
+      navigate("/employee/leave", { replace: true });
+    } 
+    else {
+      navigate("/employee/work", { replace: true });
+    }
+
+  }, [navigate]);
 
   return <LoginForm />;
 };

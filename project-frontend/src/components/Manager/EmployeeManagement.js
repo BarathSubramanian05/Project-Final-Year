@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useEmployee } from "../../context/EmployeeContext";
 import styles from "../../styles/Manager/ManagerDashboard.module.css";
 import axiosInstance from "../axiosConfig";
 
 const EmployeesUnderManager = () => {
-    const { employee } = useEmployee();
+    const employee = JSON.parse(sessionStorage.getItem("employee"));
     const [employees, setEmployees] = useState([]);
     const [filteredEmployees, setFilteredEmployees] = useState([]);
 

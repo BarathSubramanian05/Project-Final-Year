@@ -7,6 +7,7 @@ import com.example.project_tracking.Model.Employee;
 import com.example.project_tracking.Service.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,6 +20,7 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
+    @PreAuthorize("permitAll()")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request)
     {
@@ -40,12 +42,14 @@ public class EmployeeController {
         return ResponseEntity.ok("Employee Added");
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")
     public ResponseEntity<?> getEmployeeById(@PathVariable Long id)
     {
         return ResponseEntity.ok(employeeService.findEmployeeById(id));
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/get")
     public ResponseEntity<?> getById(@RequestParam long id)
     {
@@ -56,33 +60,39 @@ public class EmployeeController {
         return ResponseEntity.ok(emp);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/getallmanagers")
     public ResponseEntity<?> getAllManagers(){
         return ResponseEntity.ok(employeeService.getAllManagers());
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @GetMapping("/getallemployees")
     public ResponseEntity<?> getAllEmployees(){
         return ResponseEntity.ok(employeeService.getAllEmployees());
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @GetMapping("/gettls")
     public ResponseEntity<?> getTlsUnderManager(@RequestParam Long mgrid){
         return ResponseEntity.ok(employeeService.getTLsUnderManager(mgrid));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @GetMapping("/getbymgr")
     public ResponseEntity<?> getAllByManagerId(@RequestParam Long mgrid)
     {
         return ResponseEntity.ok(employeeService.getEmployeesByManagerId(mgrid));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/editemployee")
     public ResponseEntity<?> editEmployee(@RequestBody Employee employee)
     {
         return ResponseEntity.ok(employeeService.editEmployee(employee));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/soft-delete/{id}")
     public ResponseEntity<?> softDeleteEmployee(@PathVariable Long id) {
         return ResponseEntity.ok(employeeService.softDelete(id));

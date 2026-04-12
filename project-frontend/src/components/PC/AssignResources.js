@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/Employee/LeavePermissionForm.module.css";
-import { useEmployee } from "../../context/EmployeeContext";
 import { useToast } from "../../context/ToastContext";
 import axiosInstance from "../axiosConfig";
 import axios from "axios";
 
 const AssignActivityForm = () => {
-  const { employee } = useEmployee();
+  const employee = JSON.parse(sessionStorage.getItem("employee"));
   const managerId = employee?.empId;
   const [projects, setProjects] = useState([]);
   const [activities, setActivities] = useState([]);
@@ -225,6 +224,7 @@ useEffect(() => {
   const handleActivityChange = (e) => {
     const selectedActivity = activities.find((act) => act.id.toString() === e.target.value);
 
+    console.log(selectedActivity)
     setFormData((prev) => ({
       ...prev,
       activityId: e.target.value,

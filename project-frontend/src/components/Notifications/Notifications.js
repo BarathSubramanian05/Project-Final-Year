@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { FaBell } from "react-icons/fa";
 import "../../styles/Notifications/Notifications.css";
-import { useEmployee } from "../../context/EmployeeContext";
 import { useToast } from "../../context/ToastContext";
 import axiosInstance from "../axiosConfig";
 
 
 const Notifications = () => {
-    const { employee } = useEmployee(); // current user (AGM or PM etc.)
+    const employee = JSON.parse(sessionStorage.getItem("employee"));
     const isAGM = employee?.role === "Assistant General Manager";
     const userId = employee?.empId;
 

@@ -1,5 +1,6 @@
 package com.example.project_tracking.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -30,6 +31,7 @@ public class Employee {
     private Employee reportingTo; // Self-reference for manager
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<UserRole> userRoles = new HashSet<>();
 
     @Column(name = "username", unique = true, nullable = false)

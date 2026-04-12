@@ -1,5 +1,6 @@
 package com.example.project_tracking.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,6 +13,7 @@ public class UserRole {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private Employee user;
 
     @ManyToOne

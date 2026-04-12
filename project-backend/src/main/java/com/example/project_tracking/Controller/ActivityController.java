@@ -4,6 +4,7 @@ import com.example.project_tracking.Model.Activity;
 import com.example.project_tracking.Service.ActivityService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class ActivityController {
         this.activityService = activityService;
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/")
     public ResponseEntity<?> getActive()
     {
@@ -25,7 +27,7 @@ public class ActivityController {
         return ResponseEntity.ok(all);
     }
 
-
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @GetMapping("/all")
     public ResponseEntity<?> getAll()
     {
@@ -33,6 +35,7 @@ public class ActivityController {
         return response!=null ? ResponseEntity.ok(response) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/save")
     public ResponseEntity<?> saveActivity(@RequestBody Activity activity){
         activityService.saveNewActivity(activity);
@@ -40,12 +43,14 @@ public class ActivityController {
         return ResponseEntity.ok("Activity saved");
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/edit/{id}")
     public ResponseEntity<?> editActivity(@PathVariable Long id,@RequestBody Activity activity){
         activityService.editActivity(activity,id);
         return ResponseEntity.ok("Activity saved");
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteActivity(@PathVariable Long id)
     {
@@ -53,6 +58,7 @@ public class ActivityController {
         return ResponseEntity.ok("Deleted Successfully");
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @GetMapping("/get-type/{id}")
     public String getMainType(@PathVariable Long id)
     {

@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import styles from "../../styles/AGM/AddActivity.module.css"; // reuse CSS
 import axiosInstance from "../axiosConfig";
 import { useToast } from "../../context/ToastContext";
-import { useEmployee } from "../../context/EmployeeContext";
 
 const AssignProjectForm = () => {
-   const { employee } = useEmployee();
+
+  const employee = JSON.parse(sessionStorage.getItem("employee"));
   const [pms, setPMs] = useState([]);
   const [formData, setFormData] = useState({
     projectName: "",

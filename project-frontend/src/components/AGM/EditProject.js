@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../axiosConfig";
 import styles from "../../styles/AGM/EditProject.module.css"
-import { useEmployee } from "../../context/EmployeeContext";
 import AssignProjectForm from './AssignProjectForm';
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../../context/ToastContext";
 
 const EditProject = () => {
-  const { employee, loading } = useEmployee();
+  const employee = JSON.parse(sessionStorage.getItem("employee"));
   const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
@@ -30,10 +29,7 @@ const EditProject = () => {
     projectStatus: ""
   });
 
-  // Redirect if not logged in
-  useEffect(() => {
-    if (!loading && !employee) navigate("/");
-  }, [employee, loading, navigate]);
+
 
   // Fetch all projects initially
   // Fetch all projects & managers together

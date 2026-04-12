@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../axiosConfig";
 import styles from "../../styles/Employee/EmployeeWorkForm.module.css";
-import { useEmployee } from "../../context/EmployeeContext";
 import { useToast } from "../../context/ToastContext";
 
 
 const ViewWorkDetails = ({ work, onBack,onUpdate }) => {
-  const { employee } = useEmployee();
+  const employee = JSON.parse(sessionStorage.getItem("employee"));
   const [projects, setProjects] = useState([]);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [selectedActivityId, setSelectedActivityId] = useState(null);

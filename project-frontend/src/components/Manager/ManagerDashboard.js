@@ -1,12 +1,11 @@
 
 import React, { useEffect, useState } from "react";
-import { useEmployee } from "../../context/EmployeeContext.js";
 import styles from "../../styles/Manager/ManagerDashboard.module.css";
 import axiosInstance from "../axiosConfig.js";
 import axios, { all } from "axios";
 
 const ManagerDashboard = () => {
-  const { employee } = useEmployee();
+  const employee = JSON.parse(sessionStorage.getItem("employee"));
   const [projects, setProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [filter, setFilter] = useState("All");
@@ -38,6 +37,10 @@ const ManagerDashboard = () => {
   const totalPages = Math.ceil(filteredLogs.length / itemsPerPage);
   const currentLogs = filteredLogs.slice(startIndex, startIndex + itemsPerPage);
 
+  const isAGM =
+  employee?.designation?.trim() === "Assistant IT Manager" ||
+  employee?.designation?.trim() === "Assistant General Manager";
+
   useEffect(() => {
     let filtered = worklogs;
 
@@ -60,54 +63,46 @@ const ManagerDashboard = () => {
   }, [filterFromDate, filterToDate, filterEmployee, filterStatus, worklogs]);
 
 
-
-  useEffect(() => {
-    if (showWorklogs) setCurrentPage(1);
-  }, [showWorklogs]);
+useEffect(() => {
+  if (!employee?.empId) return;
 
   const isAGM =
-    employee?.designation.trim() === "Assistant General Manager" ||
-    employee?.designation.trim() === "Assistant IT Manager";
+    employee.designation.trim() === "Assistant IT Manager" ||
+    employee.designation.trim() === "Assistant General Manager";
 
-  useEffect(() => {
-    if (!employee.empId) return;
+  const managerIdToUse = employee.manager
+    ? employee.empId
+    : employee.reportingToId;
 
-    //const managerIdToUse = employee.manager ? employee.id : employee.reportingToId;
-    // ✅ Admin should have same access as AGM
-    const isAGM =
-      employee.designation.trim() === "Assistant IT Manager" ||
-      employee.designation.trim() === "Assistant General Manager"
+  const endpoint = isAGM
+    ? `/project/`
+    : `/project/${managerIdToUse}`;
 
-    // Use appropriate ID depending on role
-    const managerIdToUse = employee.manager ? employee.empId : employee.reportingToId;
+  axiosInstance.get(endpoint).then((res) => {
+    const data = Array.isArray(res.data) ? res.data : [];
+
+    setProjects(data);
+    setFilteredProjects(data.filter((p) => p.projectStatus));
+  });
+}, [employee?.empId]);
 
 
-    const endpoint = isAGM
-      ? `/project/`
-      : `/project/${managerIdToUse}`;
+useEffect(() => {
+  axiosInstance.get("/employee/getallmanagers")
+    .then((res) => {
+      const mgrMap = {};
+      const managersData = Array.isArray(res.data) ? res.data : [];
 
-    axiosInstance
-      .get(endpoint)
-      .then((res) => {
-        setProjects(res.data);
-        setFilteredProjects(res.data);
-        setFilter("All");
+      managersData.forEach((m) => {
+        mgrMap[m.empId] = m.name;
+      });
 
-        if (isAGM) {
-          axiosInstance
-            .get("/employee/getallmanagers")
-            .then((res) => {
-              const mgrMap = {};
-              res.data.forEach((m) => {
-                mgrMap[m.empId] = m.name;
-              });
-              setManagers(mgrMap);
-            })
-
-        }
-      })
-
-  }, [employee]);
+      setManagers(mgrMap);
+    })
+    .catch((err) => {
+      console.error("Error fetching managers:", err);
+    });
+}, []);
 
 
 
@@ -832,4 +827,4 @@ const ManagerDashboard = () => {
   );
 };
 
-export default ManagerDashboard;
+export default ManagerDashboard

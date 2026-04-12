@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styles from "../../styles/Employee/LeavePermissionForm.module.css"; // reuse same CSS
-import { useEmployee } from "../../context/EmployeeContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../../context/ToastContext";
@@ -8,14 +7,10 @@ import axiosInstance from "../axiosConfig";
 
 
 const ProjectAssignmentForm = () => {
-  const { employee, loading } = useEmployee();
+  const employee = JSON.parse(sessionStorage.getItem("employee"));
   const navigate = useNavigate(); // 👈 added
 
-  useEffect(() => {
-    if (!loading && !employee) {
-      navigate("/"); // 👈 redirect to login page
-    }
-  }, [employee, loading, navigate]);
+
 
 
 

@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "../../styles/Employee/EmployeeNavbar.module.css";
-import { useEmployee } from "../../context/EmployeeContext";
 import Notifications from "../Notifications/Notifications"; // adjust path as needed
 import axiosInstance from "../axiosConfig";
 
 const ManagerNavbar = () => {
   const navigate = useNavigate();
-  const { employee, logout } = useEmployee();
+  const employee = JSON.parse(sessionStorage.getItem("employee"));
   const [menuOpen, setMenuOpen] = useState(false);
   const [pendingCount, setPendingCount] = useState(0);
 
@@ -27,10 +26,10 @@ const ManagerNavbar = () => {
     navigate(-1);
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate("/", { replace: true });
-  };
+const handleLogout = () => {
+  sessionStorage.removeItem("employee");
+  navigate("/", { replace: true });
+};
 
   useEffect(() => {
     if (!employee?.empId) return;

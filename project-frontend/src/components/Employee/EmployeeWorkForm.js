@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../axiosConfig";
 import styles from "../../styles/Employee/EmployeeWorkForm.module.css";
-import { useEmployee } from "../../context/EmployeeContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "../../context/ToastContext";
 
 const EmployeeWorkForm = () => {
-  const { employee, loading } = useEmployee();
+  const employee = JSON.parse(sessionStorage.getItem("employee"));
   const [projects, setProjects] = useState([]);
   const [activities, setActivities] = useState([]);
   const [filteredActivities, setFilteredActivities] = useState([]);
@@ -16,6 +15,7 @@ const EmployeeWorkForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { work } = location.state || {};
+  const [hasFetched, setHasFetched] = useState(false);
 
   const { showToast } = useToast();
   // manager view/edit if present
@@ -55,23 +55,18 @@ const EmployeeWorkForm = () => {
   }, [activeWorkId]);
 
   // Fetch projects and activities
-  useEffect(() => {
-    if (!employee || !employee.reportingToId) return;
 
-    axiosInstance
-      .get(`/project/${employee.reportingToId}`)
-      .then((res) => {
-        //const filtered = res.data.filter(project => project.tlId!=null);
-        setProjects(res.data);
-      })
+useEffect(() => {
+  if (!employee || !employee.reportingToId) return;
 
+  axiosInstance.get(`/project/${employee.reportingToId}`)
+    .then((res) => setProjects(res.data));
 
-    axiosInstance
-      .get("/activity/")
-      .then((res) => setActivities(res.data))
+  axiosInstance.get("/activity/")
+    .then((res) => setActivities(res.data));
 
-  }, [employee]);
-
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
   // Prevent back navigation on /employee routes (only while this component is mounted)
   useEffect(() => {
     const handlePopState = (event) => {
@@ -97,7 +92,14 @@ const EmployeeWorkForm = () => {
   // Resume or restore logic — ONLY run for employee mode (skip when manager view is present)
   useEffect(() => {
 
+    
+    if (!employee || projects.length === 0 || activities.length === 0) return;
+
     // helper to enable stop button after remaining ms
+
+    if (hasFetched) return;
+
+  setHasFetched(true);
 
 
     // CASE 1: If there's an activeWorkId (stopped-but-not-submitted), fetch by ID
@@ -169,7 +171,6 @@ const EmployeeWorkForm = () => {
       checkActiveRunningWork();
     }
 
-
     function checkActiveRunningWork() {
       axiosInstance
         .get(`/workdetails/active/${employee.empId}`)
@@ -187,7 +188,11 @@ const EmployeeWorkForm = () => {
             //const assigned = assignedActivities.find((a) => a.id.toString()===active.)
 
             // Store running work ID locally so the stopped-but-not-submitted flow works
-            setActiveWorkId(active.id);
+  if (active && !active.endTime) {
+  if (!activeWorkId) {
+    setActiveWorkId(active.id);
+  }
+}
 
 
             // Autofill form for the running session
@@ -235,7 +240,7 @@ const EmployeeWorkForm = () => {
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [employee, projects, activities, activeWorkId]);
+  },  [employee, projects.length, activities.length]);
 
   const fetchAssignedActivities = async (projectId, employeeId) => {
     try {
@@ -392,14 +397,15 @@ const EmployeeWorkForm = () => {
         .post("/workdetails/save", payload)
         .then((res) => {
           const workId = res.data.id;
+          console.log(res)
           setActiveWorkId(workId);
-
           setFormData((prev) => ({
             ...prev,
+            assignedWorkId:res.data.assignedWorkId,
             startTime: start, // only add start time
           }));
 
-
+          console.log(formData)
           setIsRunning(true);
 
           setSubmitDisabled(true);
@@ -443,7 +449,7 @@ const EmployeeWorkForm = () => {
             workHours: diffHours,
           }));
           setIsRunning(false);
-
+          console.log(formData)
           setStartDisabled(true);
           setSubmitDisabled(false);
         })
@@ -518,13 +524,28 @@ const EmployeeWorkForm = () => {
       remarks: formData.remarks,
     };
 
+    console.log("EMPLOYEE:", employee);
+console.log("FORM DATA:", formData);
 
-    axiosInstance
-      .put(`/workdetails/savefinal`, payload, {
-        params: { activeWorkId: activeWorkId },
-      })
+  const currentWorkId = activeWorkId || localStorage.getItem("activeWorkId");
+
+  if (!currentWorkId) {
+    showToast("Work ID missing. Please refresh and try again.", "error");
+    return;
+  }
+
+  console.log("STATE activeWorkId:", activeWorkId);
+console.log("LS activeWorkId:", localStorage.getItem("activeWorkId"));
+console.log("FINAL ID USED:", currentWorkId);
+
+  axiosInstance.put(`/workdetails/savefinal`, payload, {
+    params: { activeWorkId: currentWorkId },
+  })
       .then(() => {
         showToast("Work submitted successfully!", "success");
+  localStorage.removeItem("activeWorkId"); 
+  setActiveWorkId(null);
+  setHasFetched(false);
         setFormData({
           projectId: "",
           clientName: "",
@@ -585,7 +606,6 @@ const EmployeeWorkForm = () => {
     ].includes(field);
   };
 
-  if (loading) return <p>Loading employee details...</p>;
 
   return (
     <div>

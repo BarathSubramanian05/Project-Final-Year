@@ -1,5 +1,7 @@
 package com.example.project_tracking.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -8,9 +10,12 @@ public class WorkDetailsRequest {
     private Long managerId;
     private Long projectId;
     private Long activityId;
-    private LocalDate date;
     private Double workHours;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate date;
+    @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime startTime;
+    @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime endTime;
     private String projectActivity;
     private String assignedWork;

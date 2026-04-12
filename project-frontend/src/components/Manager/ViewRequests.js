@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/Manager/ViewRequests.module.css";
-import { useEmployee } from "../../context/EmployeeContext";
 import { useToast } from "../../context/ToastContext";
 import axiosInstance from "../axiosConfig";
 
@@ -14,7 +13,7 @@ const ViewRequests = () => {
   const [showCustomBox, setShowCustomBox] = useState(false);
 
 
-  const { employee, loading } = useEmployee();
+  const employee = JSON.parse(sessionStorage.getItem("employee"));
   const { showToast } = useToast();
 
 
@@ -195,7 +194,6 @@ const ViewRequests = () => {
 
 
 
-  if (loading) return <div className={styles.noData}>Loading...</div>;
 
   return (
     <div className={styles.container}>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../axiosConfig";
 import styles from "../../styles/AGM/EditProject.module.css";
-import { useEmployee } from "../../context/EmployeeContext";
 import { useNavigate } from "react-router-dom";
 import AddEmployeeForm from './AddEmployeeForm';
 import { useToast } from "../../context/ToastContext";
@@ -50,7 +49,7 @@ const designationToRole = {
 
 
 const EditEmployee = () => {
-  const { employee, loading } = useEmployee();
+  const employee = JSON.parse(sessionStorage.getItem("employee"));
   const navigate = useNavigate();
   const [employees, setEmployees] = useState([]);
   const [filteredEmployees, setFilteredEmployees] = useState([]);
@@ -118,11 +117,6 @@ const EditEmployee = () => {
     username: "",
     password: "",
   });
-
-  // Redirect if not logged in
-  useEffect(() => {
-    if (!loading && !employee) navigate("/");
-  }, [employee, loading, navigate]);
 
   // Fetch employees + managers
   useEffect(() => {

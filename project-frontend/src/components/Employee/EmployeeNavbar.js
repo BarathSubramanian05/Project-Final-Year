@@ -1,25 +1,25 @@
 import React, { useContext } from "react";
 import { Link, useNavigate,useLocation  } from "react-router-dom";
 import styles from "../../styles/Employee/EmployeeNavbar.module.css";
-import { useEmployee } from "../../context/EmployeeContext";
 import Notifications from "../Notifications/Notifications";
 
 const EmployeeNavbar = () => {
   const navigate = useNavigate();
-  const { employee, logout } = useEmployee();
-  const isHR=employee.designation.trim()==="HR Manager" || employee.role.trim()==="IT Admin" || employee.role.trim()==="Accounts";
- const handleBack = () => {
+  const employee = JSON.parse(sessionStorage.getItem("employee"));
+  console.log(employee)
+    if (!employee) return null; 
+  const isHR = employee.authority === "ROLE_ADMIN" || employee.authority === "ROLE_HR"; 
+  const handleBack = () => {
   // Don’t allow back on main work page
   if (window.location.pathname === "/employee/work") return;
   navigate(-1);
 };
 
 
-  const handleLogout = () => {
-    logout(); 
-    navigate("/", { replace: true }); 
-  };
-
+ const handleLogout = () => {
+  sessionStorage.removeItem("employee");
+  navigate("/", { replace: true });
+};
   if (!employee) return null; 
 
   return (

@@ -2,6 +2,7 @@ package com.example.project_tracking.Controller;
 
 import com.example.project_tracking.Model.Notification;
 import com.example.project_tracking.Service.NotificationService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,17 +19,20 @@ public class NotificationController {
     }
 
     // Get all notifications for a user
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{userId}")
     public List<Notification> getNotifications(@PathVariable Long userId) {
         return notificationService.getNotificationsForUser(userId);
     }
 
     // Mark notification as read
+    @PreAuthorize("isAuthenticated()")
     @PutMapping("/read/{id}")
     public Notification markAsRead(@PathVariable Long id) {
         return notificationService.markAsRead(id);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @PutMapping("/approve/{id}")
     public Notification markAsApproved(@PathVariable Long id)
     {
@@ -36,6 +40,7 @@ public class NotificationController {
     }
 
     // Create notification manually (optional, mostly used internally)
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @PostMapping("/create")
     public Notification createNotification(@RequestParam Long senderId,
                                            @RequestParam Long receiverId,

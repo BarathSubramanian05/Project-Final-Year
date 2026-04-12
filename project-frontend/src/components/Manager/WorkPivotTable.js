@@ -3,7 +3,6 @@ import PivotTableUI from "react-pivottable/PivotTableUI";
 import "react-pivottable/pivottable.css";
 import axiosInstance from "../axiosConfig";
 import * as XLSX from "xlsx";
-import { useEmployee } from "../../context/EmployeeContext";
 import "../../styles/Manager/PivotTableCustom.css";
 import PivotTable from "react-pivottable/PivotTable"; // extra import for safety
 import { useToast } from "../../context/ToastContext";
@@ -128,8 +127,7 @@ const WorkPivotTable = () => {
     vals: ["Work Hours"],
     rendererName: "Table",
   });
-  const { employee } = useEmployee();
-
+  const employee = JSON.parse(sessionStorage.getItem("employee"));
   useEffect(() => {
     patchPivotFilterBox(); // apply filter dropdown customization
   }, []);
@@ -144,7 +142,8 @@ const WorkPivotTable = () => {
     const endpoint = isAGM
       ? `/workdetails/all`
       : `/workdetails/manager/${employee.empId}`;
-
+    
+      console.log(endpoint)
     // ✅ Fetch WorkDetails + All Projects in Parallel
     Promise.all([
       axiosInstance.get(endpoint),

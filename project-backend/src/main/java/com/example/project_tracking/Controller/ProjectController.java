@@ -22,7 +22,7 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")
     public ResponseEntity<?> getProjectsByManagerId(@PathVariable long id)
     {
@@ -30,7 +30,7 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.getProjectsByManager(id));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @GetMapping("/")
     public ResponseEntity<?> getAllProjects()
     {

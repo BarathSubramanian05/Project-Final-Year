@@ -1,20 +1,20 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { useEmployee } from "../context/EmployeeContext";
 
-const ProtectedRoute = ({ children , allowedRoles ,excludedRoles }) => {
-  const { employee } = useEmployee();
+const ProtectedRoute = ({ children, allowedRoles, excludedRoles }) => {
+  const employee = JSON.parse(sessionStorage.getItem("employee"));
 
   if (!employee) {
-    return <Navigate to="/" replace />; // redirect to login
+    return <Navigate to="/" replace />;
   }
 
-  if (allowedRoles && !allowedRoles.includes(employee.designation.trim())) {
-    // Unauthorized access → redirect to "unauthorized" or home page
+  const authority = employee?.authority?.trim();
+
+  if (allowedRoles && !allowedRoles.includes(authority)) {
     return <Navigate to="/unauthorized" replace />;
   }
 
-  if (excludedRoles && excludedRoles.includes(employee.designation.trim())) {
+  if (excludedRoles && excludedRoles.includes(authority)) {
     return <Navigate to="/unauthorized" replace />;
   }
 

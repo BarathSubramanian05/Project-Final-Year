@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styles from "../../styles/Employee/LeavePermissionForm.module.css";
-import { useEmployee } from "../../context/EmployeeContext";
 import axiosInstance from "../axiosConfig";
 import { useToast } from "../../context/ToastContext";
 
 const LeavePermissionForm = () => {
   const [activeTab, setActiveTab] = useState("apply");
   const [requests, setRequests] = useState([]);
-  const { employee, loading } = useEmployee();
+  const employee = JSON.parse(sessionStorage.getItem("employee"));
   const [formData, setFormData] = useState({
     employeeId: employee?.empId || "",      // from logged-in user
     managerId: employee?.reportingToId || "",
@@ -39,11 +38,6 @@ const LeavePermissionForm = () => {
   }, [employee]);
 
 
-  useEffect(() => {
-    if (!loading && !employee) {
-      showToast("Employee not found or not logged in!", "error");
-    }
-  }, [loading, employee]);
   useEffect(() => {
     if (activeTab === "view" && employee?.empId) {
       axiosInstance

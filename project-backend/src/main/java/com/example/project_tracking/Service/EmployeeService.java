@@ -1,22 +1,15 @@
 package com.example.project_tracking.Service;
 
 import com.example.project_tracking.DTO.DataTransfer;
-import com.example.project_tracking.DTO.LoginRequest;
-import com.example.project_tracking.DTO.ProjectRequest;
-import com.example.project_tracking.DTO.WorkDetailsResponse;
 import com.example.project_tracking.Model.Employee;
 import com.example.project_tracking.Model.LeaveBalance;
-import com.example.project_tracking.Model.Project;
-import com.example.project_tracking.Model.WorkDetails;
 import com.example.project_tracking.Repository.EmployeeRepository;
 import com.example.project_tracking.Repository.LeaveBalanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
